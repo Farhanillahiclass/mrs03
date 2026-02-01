@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - MRS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .admin-bg {
+            background-color: #1a202c;
+            background-image: linear-gradient(to bottom right, #1a202c, #2d3748);
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <nav class="bg-[#1F4F3A] text-white shadow-md">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <i class="fas fa-shield-alt text-red-500 text-2xl mr-3"></i>
+                <h1 class="text-2xl font-bold">Admin Panel</h1>
+            </div>
+            <div>
+                <span id="adminName" class="mr-4 text-gray-300"></span>
+                <a href="dashboard.html" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 mr-4 text-sm">User Dashboard</a>
+                <a href="login.html#register" target="_blank" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 mr-4 text-sm">Register New User</a>
+                <a href="mrs.html" class="text-gray-300 hover:text-white mr-4">Home</a>
+                <button onclick="logout()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-6 py-8">
+        
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-blue-500">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-gray-500">Total Users</p>
+                        <h3 id="totalUsers" class="text-3xl font-bold text-gray-800">0</h3>
+                    </div>
+                    <i class="fas fa-users text-blue-500 text-3xl"></i>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-gray-500">Total Courses</p>
+                        <h3 id="totalCourses" class="text-3xl font-bold text-gray-800">0</h3>
+                    </div>
+                    <i class="fas fa-book text-green-500 text-3xl"></i>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-purple-500">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-gray-500">Total Enrollments</p>
+                        <h3 id="totalEnrollments" class="text-3xl font-bold text-gray-800">0</h3>
+                    </div>
+                    <i class="fas fa-graduation-cap text-purple-500 text-3xl"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Overview -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <!-- Revenue Card -->
+            <div class="bg-white rounded-lg shadow-md p-6 border-t-4 border-green-600">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Financial Overview</h3>
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-gray-500">Total Revenue</span>
+                    <span id="totalRevenue" class="text-3xl font-bold text-green-600">$0</span>
+                </div>
+                <p class="text-sm text-gray-400">Based on total course enrollments.</p>
+            </div>
+
+            <!-- Create Course Form -->
+            <div class="bg-white rounded-lg shadow-md p-6 border-t-4 border-blue-600">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Upload New Course</h3>
+                <form onsubmit="handleCreateCourse(event)" class="space-y-3">
+                    <input type="text" id="courseTitle" placeholder="Course Title" class="w-full px-4 py-2 border rounded focus:outline-none focus:border-blue-500" required>
+                    <input type="text" id="courseDesc" placeholder="Description" class="w-full px-4 py-2 border rounded focus:outline-none focus:border-blue-500" required>
+                    <div class="flex gap-2">
+                        <input type="number" id="coursePrice" placeholder="Price ($)" class="w-full px-4 py-2 border rounded focus:outline-none focus:border-blue-500" required>
+                        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 font-bold">Upload</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Platform Management (IMS & Chatbot) -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <!-- IMS Manager -->
+            <div class="bg-white rounded-lg shadow-md p-6 border-t-4 border-green-600">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">IMS Daily Reminder</h3>
+                <form onsubmit="handleUpdateIMS(event)" class="space-y-3">
+                    <textarea id="imsText" placeholder="Enter daily Islamic reminder..." rows="3" class="w-full px-4 py-2 border rounded focus:outline-none focus:border-green-500" required></textarea>
+                    <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 font-bold w-full">Update Reminder</button>
+                </form>
+            </div>
+
+            <!-- Chatbot Manager -->
+            <div class="bg-white rounded-lg shadow-md p-6 border-t-4 border-blue-600">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Chatbot Knowledge Base</h3>
+                <form onsubmit="handleAddChatbotData(event)" class="space-y-3">
+                    <input type="text" id="chatKeywords" placeholder="Keywords (comma separated)" class="w-full px-4 py-2 border rounded focus:outline-none focus:border-blue-500" required>
+                    <textarea id="chatResponse" placeholder="Bot Response..." rows="2" class="w-full px-4 py-2 border rounded focus:outline-none focus:border-blue-500" required></textarea>
+                    <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 font-bold w-full">Add to Knowledge Base</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Pending Admin Approvals -->
+        <div class="bg-white rounded-lg shadow-md mb-8 overflow-hidden">
+            <div class="bg-gray-800 px-6 py-4 border-b border-gray-700">
+                <h3 class="text-xl font-bold text-white">Pending Admin Approvals</h3>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pendingAdminsList" class="divide-y divide-gray-200"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Security Panel -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+            <div class="bg-white rounded-lg shadow-md p-6 border-t-4 border-yellow-500">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Suspend/Unsuspend User</h3>
+                <form onsubmit="handleSuspendUserForm(event)" class="space-y-3">
+                    <input type="email" id="suspend-email" placeholder="User Email" class="w-full px-4 py-2 border rounded focus:outline-none focus:border-yellow-500" required>
+                    <select id="suspend-action" class="w-full px-4 py-2 border rounded bg-white">
+                        <option value="true">Suspend</option>
+                        <option value="false">Unsuspend</option>
+                    </select>
+                    <button type="submit" class="bg-yellow-600 text-white px-6 py-2 rounded hover:bg-yellow-700 font-bold w-full">Apply Action</button>
+                </form>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6 border-t-4 border-red-500">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Trigger Password Reset</h3>
+                <form onsubmit="handleResetPassForm(event)" class="space-y-3">
+                    <input type="email" id="reset-email" placeholder="User Email" class="w-full px-4 py-2 border rounded focus:outline-none focus:border-red-500" required>
+                    <button type="submit" class="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700 font-bold w-full">Trigger Reset</button>
+                </form>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6 border-t-4 border-blue-500">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">View Login History</h3>
+                <form onsubmit="handleViewLoginHistory(event)" class="space-y-3">
+                    <input type="email" id="history-email" placeholder="User Email" class="w-full px-4 py-2 border rounded focus:outline-none focus:border-blue-500" required>
+                    <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 font-bold w-full">View History</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Pending Transactions -->
+        <div class="bg-white rounded-lg shadow-md mb-8 overflow-hidden">
+            <div class="bg-gray-800 px-6 py-4 border-b border-gray-700">
+                <h3 class="text-xl font-bold text-white">Pending Transactions</h3>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Transaction ID</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pendingTransactionsList" class="divide-y divide-gray-200"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Chatbot Feedback -->
+        <div class="bg-white rounded-lg shadow-md mb-8 overflow-hidden">
+            <div class="bg-gray-800 px-6 py-4 border-b border-gray-700">
+                <h3 class="text-xl font-bold text-white">Chatbot Feedback Analysis</h3>
+            </div>
+            <div class="overflow-x-auto max-h-64">
+                <table class="min-w-full">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User Query</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bot Response</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rating</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="chatbotFeedbackList" class="divide-y divide-gray-200"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Review Management -->
+        <div class="bg-white rounded-lg shadow-md mb-8 overflow-hidden">
+            <div class="bg-gray-800 px-6 py-4 border-b border-gray-700">
+                <h3 class="text-xl font-bold text-white">Review Management</h3>
+            </div>
+            <div class="overflow-x-auto max-h-64">
+                <table class="min-w-full">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rating</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Content</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reviewsList" class="divide-y divide-gray-200"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Volunteer Management -->
+        <div class="bg-white rounded-lg shadow-md mb-8 overflow-hidden">
+            <div class="bg-gray-800 px-6 py-4 border-b border-gray-700">
+                <h3 class="text-xl font-bold text-white">Volunteer Applications</h3>
+            </div>
+            <div class="overflow-x-auto max-h-64">
+                <table class="min-w-full">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Skills</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="volunteersList" class="divide-y divide-gray-200"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Rejected Transactions Log -->
+        <div class="bg-white rounded-lg shadow-md mb-8 overflow-hidden">
+            <div class="bg-gray-800 px-6 py-4 border-b border-gray-700">
+                <h3 class="text-xl font-bold text-white">Rejected Transactions Log</h3>
+            </div>
+            <div class="overflow-x-auto max-h-64">
+                <table class="min-w-full">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Transaction ID</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rejectedTransactionsList" class="divide-y divide-gray-200"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Recent Payments -->
+        <div class="bg-white rounded-lg shadow-md mb-8 overflow-hidden">
+            <div class="bg-gray-800 px-6 py-4 border-b border-gray-700">
+                <h3 class="text-xl font-bold text-white">Recent Payments</h3>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="paymentsList" class="divide-y divide-gray-200"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Activity Logs -->
+        <div class="bg-white rounded-lg shadow-md mb-8 overflow-hidden">
+            <div class="bg-gray-800 px-6 py-4 border-b border-gray-700">
+                <h3 class="text-xl font-bold text-white">Activity Logs</h3>
+            </div>
+            <div class="overflow-x-auto max-h-64">
+                <table class="min-w-full">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Admin</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Details</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="activityLogsList" class="divide-y divide-gray-200"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- User Management -->
+        <div class="bg-white rounded-lg shadow-md mb-8 overflow-hidden">
+            <div class="bg-gray-800 px-6 py-4 border-b border-gray-700 flex justify-between items-center">
+                <h3 class="text-xl font-bold text-white">User Management</h3>
+                <input type="text" id="userSearch" oninput="filterUsers()" placeholder="Search users..." class="px-3 py-1 rounded text-gray-800 focus:outline-none text-sm w-64">
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersList" class="divide-y divide-gray-200">
+                        <!-- Users will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Course Management -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="bg-gray-800 px-6 py-4 border-b border-gray-700">
+                <h3 class="text-xl font-bold text-white">Course Management</h3>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="coursesList" class="divide-y divide-gray-200">
+                        <!-- Courses will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Login History Modal -->
+    <div id="login-history-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-lg mx-4 p-6">
+            <div class="flex justify-between items-center mb-4 border-b pb-2">
+                <h3 class="text-xl font-bold text-gray-800">Login History</h3>
+                <button onclick="document.getElementById('login-history-modal').classList.add('hidden')" class="text-gray-500 hover:text-red-500 text-2xl">&times;</button>
+            </div>
+            <div id="login-history-list" class="max-h-64 overflow-y-auto space-y-2"></div>
+        </div>
+    </div>
+
+    <script>
+        function logout() {
+            localStorage.clear();
+            window.location.href = 'mrs.html';
+        }
+
+        let allUsers = [];
+
+        async function loadAdminData() {
+            const userRole = localStorage.getItem('userRole');
+            if (userRole !== 'Admin') {
+                alert("Access Denied");
+                window.location.href = 'login.html';
+                return;
+            }
+
+            document.getElementById('adminName').innerText = localStorage.getItem('userName');
+
+            // Mark notifications as read
+            await fetch('/api/admin/notifications/read', { method: 'POST' });
+
+            // Load Stats
+            const statsRes = await fetch('/api/admin/stats');
+            const stats = await statsRes.json();
+            document.getElementById('totalUsers').innerText = stats.totalUsers;
+            document.getElementById('totalCourses').innerText = stats.totalCourses;
+            document.getElementById('totalEnrollments').innerText = stats.totalEnrollments;
+
+            // Load Financials
+            const finRes = await fetch('/api/admin/financials');
+            const financials = await finRes.json();
+            document.getElementById('totalRevenue').innerText = '$' + financials.totalRevenue;
+            
+            const paymentsList = document.getElementById('paymentsList');
+            paymentsList.innerHTML = financials.recentTransactions.map(t => `
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${t.studentEmail}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${t.courseTitle}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-green-600">$${t.amount}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${new Date(t.date).toLocaleDateString()}</td>
+                </tr>
+            `).join('');
+
+            // Load Pending Transactions
+            loadPendingTransactions();
+
+            // Load Rejected Transactions
+            loadRejectedTransactions();
+
+            // Load Pending Admins
+            loadPendingAdmins();
+
+            // Load Volunteers
+            loadVolunteers();
+
+            // Load Reviews
+            loadReviews();
+
+            // Load Chatbot Feedback
+            loadChatbotFeedback();
+
+            // Load Activity Logs
+            const logsRes = await fetch('/api/admin/logs');
+            const logs = await logsRes.json();
+            const logsList = document.getElementById('activityLogsList');
+            logsList.innerHTML = logs.map(log => `
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${log.adminEmail}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-blue-600">${log.action}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${log.details}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${new Date(log.timestamp).toLocaleString()}</td>
+                </tr>
+            `).join('');
+
+            // Load Users
+            const usersRes = await fetch('/api/admin/users');
+            allUsers = await usersRes.json();
+            renderUsers(allUsers);
+
+            // Load Courses
+            const coursesRes = await fetch('/api/courses');
+            const courses = await coursesRes.json();
+            const coursesList = document.getElementById('coursesList');
+            coursesList.innerHTML = courses.map(c => `
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap font-medium">${c.title}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">$${c.price}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <button onclick="deleteCourse(${c.id})" class="text-red-600 hover:text-red-900">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        async function loadPendingTransactions() {
+            const res = await fetch('/api/admin/transactions');
+            const transactions = await res.json();
+            const list = document.getElementById('pendingTransactionsList');
+            
+            if (transactions.length === 0) {
+                list.innerHTML = '<tr><td colspan="5" class="px-6 py-4 text-center text-gray-500">No pending transactions</td></tr>';
+                return;
+            }
+
+            list.innerHTML = transactions.map(t => `
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${t.email}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${t.courseTitle}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">${t.transactionId}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-green-600">$${t.price}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        <button onclick="verifyTransaction(${t.courseId}, 'approved')" class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 mr-2">Approve</button>
+                        <button onclick="verifyTransaction(${t.courseId}, 'rejected')" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Reject</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        async function loadRejectedTransactions() {
+            const res = await fetch('/api/admin/rejected-transactions');
+            const transactions = await res.json();
+            const list = document.getElementById('rejectedTransactionsList');
+            
+            if (transactions.length === 0) {
+                list.innerHTML = '<tr><td colspan="5" class="px-6 py-4 text-center text-gray-500">No rejected transactions found</td></tr>';
+                return;
+            }
+
+            list.innerHTML = transactions.map(t => `
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${t.email}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${t.courseTitle}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-red-600">${t.transactionId || 'N/A'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-600">$${t.price}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${new Date(t.date).toLocaleDateString()}</td>
+                </tr>
+            `).join('');
+        }
+
+        async function loadVolunteers() {
+            const res = await fetch('/api/admin/volunteers');
+            const volunteers = await res.json();
+            const list = document.getElementById('volunteersList');
+            
+            if (volunteers.length === 0) {
+                list.innerHTML = '<tr><td colspan="4" class="px-6 py-4 text-center text-gray-500">No volunteer applications yet</td></tr>';
+                return;
+            }
+
+            list.innerHTML = volunteers.map(v => `
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${v.name}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${v.email}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${v.skills}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${new Date(v.date).toLocaleDateString()}</td>
+                </tr>
+            `).join('');
+        }
+
+        async function loadChatbotFeedback() {
+            const res = await fetch('/api/admin/chatbot/feedback');
+            const feedback = await res.json();
+            const list = document.getElementById('chatbotFeedbackList');
+            
+            if (feedback.length === 0) {
+                list.innerHTML = '<tr><td colspan="4" class="px-6 py-4 text-center text-gray-500">No feedback recorded yet</td></tr>';
+                return;
+            }
+
+            list.innerHTML = feedback.map(f => `
+                <tr>
+                    <td class="px-6 py-4 text-sm text-gray-700 max-w-xs truncate" title="${f.userQuery}">${f.userQuery}</td>
+                    <td class="px-6 py-4 text-sm text-gray-600 max-w-xs truncate" title="${f.botResponse}">${f.botResponse}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold ${f.rating === 'up' ? 'text-green-600' : 'text-red-600'}">${f.rating === 'up' ? '👍 Positive' : '👎 Negative'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${new Date(f.date).toLocaleString()}</td>
+                </tr>
+            `).join('');
+        }
+
+        async function loadReviews() {
+            const res = await fetch('/api/admin/reviews');
+            const reviews = await res.json();
+            const list = document.getElementById('reviewsList');
+            
+            if (reviews.length === 0) {
+                list.innerHTML = '<tr><td colspan="6" class="px-6 py-4 text-center text-gray-500">No reviews found</td></tr>';
+                return;
+            }
+
+            list.innerHTML = reviews.map(r => `
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${r.name}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${r.role}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-yellow-500 font-bold">${r.rating} ★</td>
+                    <td class="px-6 py-4 text-sm text-gray-600 max-w-xs truncate" title="${r.content}">${r.content}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${r.approved ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}">
+                            ${r.approved ? 'Approved' : 'Pending'}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        ${!r.approved ? `<button onclick="updateReviewStatus(${r.id}, true)" class="text-green-600 hover:text-green-900 mr-2">Approve</button>` : `<button onclick="updateReviewStatus(${r.id}, false)" class="text-yellow-600 hover:text-yellow-900 mr-2">Hide</button>`}
+                        <button onclick="deleteReview(${r.id})" class="text-red-600 hover:text-red-900">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        async function updateReviewStatus(id, approved) {
+            const res = await fetch(`/api/admin/reviews/${id}/status`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'x-admin-email': localStorage.getItem('userEmail') },
+                body: JSON.stringify({ approved })
+            });
+            if ((await res.json()).success) loadReviews();
+        }
+
+        async function deleteReview(id) {
+            if(!confirm("Are you sure you want to delete this review?")) return;
+            const res = await fetch(`/api/admin/reviews/${id}`, { method: 'DELETE', headers: { 'x-admin-email': localStorage.getItem('userEmail') } });
+            if ((await res.json()).success) loadReviews();
+        }
+
+        async function loadPendingAdmins() {
+            const res = await fetch('/api/admin/pending-approvals');
+            const pendingAdmins = await res.json();
+            const list = document.getElementById('pendingAdminsList');
+            
+            if (pendingAdmins.length === 0) {
+                list.innerHTML = '<tr><td colspan="3" class="px-6 py-4 text-center text-gray-500">No pending admin approvals.</td></tr>';
+                return;
+            }
+
+            list.innerHTML = pendingAdmins.map(admin => `
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${admin.name}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${admin.email}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        <button onclick="handleApproveAdmin('${admin.email}')" class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">Approve</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        async function handleApproveAdmin(emailToApprove) {
+            const approvalToken = prompt(`To approve ${emailToApprove}, please enter the approval token (secret key) sent to you via console/email:`);
+            if (!approvalToken) return;
+
+            const res = await fetch('/api/admin/approve-admin', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'x-admin-email': localStorage.getItem('userEmail')
+                },
+                body: JSON.stringify({ emailToApprove, approvalToken })
+            });
+            const data = await res.json();
+            alert(data.message);
+            if (data.success) {
+                loadAdminData(); // Refresh everything
+            }
+        }
+
+        async function handleSuspendUserForm(e) {
+            e.preventDefault();
+            const email = document.getElementById('suspend-email').value;
+            const suspend = document.getElementById('suspend-action').value === 'true';
+            
+            const action = suspend ? 'suspend' : 'unsuspend';
+            if (!confirm(`Are you sure you want to ${action} user ${email}?`)) return;
+
+            const res = await fetch(`/api/admin/users/${email}/suspend`, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'x-admin-email': localStorage.getItem('userEmail')
+                },
+                body: JSON.stringify({ suspend })
+            });
+            const data = await res.json();
+            alert(data.message);
+            if (data.success) {
+                e.target.reset();
+                loadAdminData(); // Refresh user list and logs
+            }
+        }
+
+        async function handleResetPassForm(e) {
+            e.preventDefault();
+            const email = document.getElementById('reset-email').value;
+            if (!confirm(`Are you sure you want to trigger a password reset for ${email}? The reset link will be logged to the server console.`)) return;
+
+            const res = await fetch(`/api/admin/users/${email}/trigger-reset`, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'x-admin-email': localStorage.getItem('userEmail')
+                }
+            });
+            const data = await res.json();
+            alert(data.message);
+            if (data.success) e.target.reset();
+        }
+
+        async function handleViewLoginHistory(e) {
+            e.preventDefault();
+            const email = document.getElementById('history-email').value;
+            
+            const res = await fetch(`/api/admin/users/${email}/login-history`);
+            const history = await res.json();
+            
+            const list = document.getElementById('login-history-list');
+            if (history.length === 0) {
+                list.innerHTML = '<p class="text-gray-500 text-center">No login history found for this user.</p>';
+            } else {
+                list.innerHTML = history.map(h => `
+                    <div class="flex justify-between items-center p-2 bg-gray-50 rounded border border-gray-200">
+                        <span class="text-sm text-gray-700">${new Date(h.timestamp).toLocaleString()}</span>
+                        <span class="text-xs font-mono text-gray-500">${h.ip}</span>
+                    </div>
+                `).join('');
+            }
+            
+            document.getElementById('login-history-modal').classList.remove('hidden');
+        }
+
+        async function verifyTransaction(id, status) {
+            if(!confirm(`Are you sure you want to ${status} this transaction?`)) return;
+            
+            const res = await fetch(`/api/admin/transactions/${id}/verify`, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'x-admin-email': localStorage.getItem('userEmail')
+                },
+                body: JSON.stringify({ status })
+            });
+            const data = await res.json();
+            alert(data.message);
+            if(data.success) {
+                loadPendingTransactions();
+                loadAdminData(); // Refresh other stats
+            }
+        }
+
+        async function handleUpdateIMS(e) {
+            e.preventDefault();
+            const text = document.getElementById('imsText').value;
+            const res = await fetch('/api/admin/ims', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'x-admin-email': localStorage.getItem('userEmail') },
+                body: JSON.stringify({ text })
+            });
+            const data = await res.json();
+            alert(data.message);
+            if(data.success) e.target.reset();
+        }
+
+        async function handleAddChatbotData(e) {
+            e.preventDefault();
+            const keywords = document.getElementById('chatKeywords').value;
+            const response = document.getElementById('chatResponse').value;
+            const res = await fetch('/api/admin/chatbot', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'x-admin-email': localStorage.getItem('userEmail') },
+                body: JSON.stringify({ keywords, response })
+            });
+            const data = await res.json();
+            alert(data.message);
+            if(data.success) e.target.reset();
+        }
+
+        function renderUsers(users) {
+            const usersList = document.getElementById('usersList');
+            if (users.length === 0) {
+                usersList.innerHTML = '<tr><td colspan="4" class="px-6 py-4 text-center text-gray-500">No users found</td></tr>';
+                return;
+            }
+            usersList.innerHTML = users.map(u => `
+                <tr class="${u.isSuspended ? 'bg-red-50 opacity-60' : ''} ${u.adminStatus === 'pending' ? 'bg-yellow-50' : ''}">
+                    <td class="px-6 py-4 whitespace-nowrap">${u.name}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${u.email}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${u.role === 'Admin' ? 'bg-red-100 text-red-800' : (u.role === 'Teacher' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800')}">
+                            ${u.role}
+                        </span>
+                        ${u.adminStatus === 'pending' ? '<span class="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pending</span>' : ''}
+                        ${u.isSuspended ? '<span class="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-500 text-white">Suspended</span>' : ''}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        ${u.role !== 'Admin' ? `<button onclick="deleteUser('${u.email}')" class="text-red-600 hover:text-red-900">Delete</button>` : ''}
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function filterUsers() {
+            const searchTerm = document.getElementById('userSearch').value.toLowerCase();
+            const filtered = allUsers.filter(u => u.name.toLowerCase().includes(searchTerm) || u.email.toLowerCase().includes(searchTerm));
+            renderUsers(filtered);
+        }
+
+        async function deleteUser(email) {
+            if(!confirm('Are you sure you want to delete this user?')) return;
+            const res = await fetch(`/api/admin/users/${email}`, { 
+                method: 'DELETE',
+                headers: { 'x-admin-email': localStorage.getItem('userEmail') }
+            });
+            const data = await res.json();
+            alert(data.message);
+            if(data.success) loadAdminData();
+        }
+
+        async function deleteCourse(id) {
+            if(!confirm('Are you sure you want to delete this course?')) return;
+            const res = await fetch(`/api/courses/${id}`, { 
+                method: 'DELETE',
+                headers: { 'x-admin-email': localStorage.getItem('userEmail') }
+            });
+            const data = await res.json();
+            alert(data.message);
+            if(data.success) loadAdminData();
+        }
+
+        async function handleCreateCourse(e) {
+            e.preventDefault();
+            const title = document.getElementById('courseTitle').value;
+            const description = document.getElementById('courseDesc').value;
+            const price = document.getElementById('coursePrice').value;
+
+            const res = await fetch('/api/courses', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'x-admin-email': localStorage.getItem('userEmail')
+                },
+                body: JSON.stringify({ title, description, price })
+            });
+            const data = await res.json();
+            alert(data.message);
+            if(data.success) {
+                e.target.reset();
+                loadAdminData();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadAdminData);
+    </script>
+</body>
+</html>

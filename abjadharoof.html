@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mrsapp - Abjad Calculator</title>
+    <style>
+        body { font-family: sans-serif; background: #f0f2f5; display: flex; justify-content: center; padding: 20px; }
+        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
+        h2 { text-align: center; color: #1a73e8; }
+        input { width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 10px; font-size: 1.5rem; text-align: right; box-sizing: border-box; }
+        .result-display { text-align: center; margin: 20px 0; padding: 20px; background: #f8f9fa; border-radius: 10px; }
+        #totalValue { font-size: 3rem; font-weight: bold; color: #1a73e8; }
+        .history-section { margin-top: 20px; border-top: 1px solid #eee; padding-top: 10px; }
+        .history-item { display: flex; justify-content: space-between; padding: 8px; border-bottom: 1px solid #f9f9f9; font-size: 0.9rem; }
+        button { width: 100%; padding: 10px; background: #1a73e8; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px; }
+        button:hover { background: #1557b0; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>mrsapp Abjad Tool</h2>
+    <input type="text" id="userInput" placeholder="اكتب الكلمة هنا..." oninput="calculate()">
+    
+    <div class="result-display">
+        <div>Total Value</div>
+        <div id="totalValue">0</div>
+        <div id="breakdown" style="color: #666; font-size: 0.8rem; margin-top: 5px;"></div>
+    </div>
+
+    <button onclick="addToHistory()">Save to History</button>
+
+    <div class="history-section">
+        <strong>Recent Calculations:</strong>
+        <div id="historyList"></div>
+    </div>
+</div>
+
+<script>
+    const abjadMap = {
+        'أ': 1, 'ا': 1, 'إ': 1, 'آ': 1, 'ب': 2, 'ج': 3, 'د': 4, 'ه': 5, 'ة': 5, 'و': 6, 
+        'ز': 7, 'ح': 8, 'ط': 9, 'ي': 10, 'ى': 10, 'ك': 20, 'ل': 30, 'م': 40, 'ن': 50, 
+        'س': 60, 'ع': 70, 'ف': 80, 'ص': 90, 'ق': 100, 'ر': 200, 'ش': 300, 'ت': 400, 
+        'ث': 500, 'خ': 600, 'ذ': 700, 'ض': 800, 'ظ': 900, 'غ': 1000, 'ئ': 1, 'ؤ': 6
+    };
+
+    function calculate() {
+        const val = document.getElementById('userInput').value;
+        let total = 0;
+        let steps = [];
+
+        for (let char of val) {
+            if (abjadMap[char]) {
+                total += abjadMap[char];
+                steps.push(`${char}(${abjadMap[char]})`);
+            }
+        }
+        document.getElementById('totalValue').innerText = total;
+        document.getElementById('breakdown').innerText = steps.join(' + ');
+    }
+
+    function addToHistory() {
+        const word = document.getElementById('userInput').value;
+        const total = document.getElementById('totalValue').innerText;
+        if (!word) return;
+
+        const item = document.createElement('div');
+        item.className = 'history-item';
+        item.innerHTML = `<span>${word}</span> <strong>${total}</strong>`;
+        
+        const list = document.getElementById('historyList');
+        list.insertBefore(item, list.firstChild);
+    }
+</script>
+
+</body>
+</html>

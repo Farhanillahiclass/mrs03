@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parent Portal - MRS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@300;400;600&display=swap');
+        body { font-family: 'Open Sans', sans-serif; }
+        h1, h2, h3 { font-family: 'Montserrat', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <nav class="bg-[#1F4F3A] text-white shadow-md">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Parent Portal</h1>
+            <div>
+                <span id="parentName" class="mr-4">Welcome, {{ user.first_name }}</span>
+                <a href="{% url 'home' %}" class="text-gray-300 hover:text-white mr-4">Home</a>
+                <button onclick="logout()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <main id="portal-content" class="container mx-auto px-6 py-8">
+        <p class="text-center text-gray-500">Loading child's progress...</p>
+    </main>
+
+    <script>
+        function logout() {
+            localStorage.clear();
+            window.location.href = "{% url 'home' %}";
+        }
+
+        async function loadParentDashboard() {
+            const container = document.getElementById('portal-content');
+
+            try {
+                // Use Django API endpoint
+                const res = await fetch(`/api/parent/dashboard?email={{ user.email }}`);
+                const childrenData = await res.json();
+
+                if (childrenData.length === 0) {
+                    container.innerHTML = `
+                        <div class="bg-white p-8 rounded-lg shadow-md text-center">
+                            <h2 class="text-2xl font-bold text-gray-800 mb-2">No Linked Children Found</h2>
+                            <p class="text-gray-600">Please ask your child to link your parent account from their profile page.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                let content = '';
+                childrenData.forEach(child => {
+                    content += `
+                        <div class="bg-white rounded-lg shadow-md mb-8">
+                            <div class="bg-gray-800 text-white p-4 rounded-t-lg">
+                                <h2 class="text-2xl font-bold">${child.name}'s Progress</h2>
+                            </div>
+                            <div class="p-6 space-y-4">
+                                ${child.enrollments.length > 0 ? child.enrollments.map(enrollment => `
+                                    <div class="border p-4 rounded-md">
+                                        <h3 class="font-bold text-lg text-gray-800">${enrollment.courseTitle}</h3>
+                                        <p class="text-sm text-gray-500 mb-2">Enrollment Date: ${new Date(enrollment.date).toLocaleDateString()}</p>
+                                        <div class="flex justify-between text-sm text-gray-600 mb-1">
+                                            <span>Progress</span>
+                                            <span>${enrollment.progress || 0}%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-4">
+                                            <div class="bg-green-600 h-4 rounded-full" style="width: ${enrollment.progress || 0}%"></div>
+                                        </div>
+                                    </div>
+                                `).join('') : '<p class="text-gray-500">No courses enrolled yet.</p>'}
+                            </div>
+                        </div>
+                    `;
+                });
+                container.innerHTML = content;
+
+            } catch (error) {
+                container.innerHTML = '<p class="text-center text-red-500">Failed to load data. Please try again later.</p>';
+                console.error("Error loading parent dashboard:", error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadParentDashboard);
+    </script>
+</body>
+</html>

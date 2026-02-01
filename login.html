@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Register - MRS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .hero-bg { background: linear-gradient(135deg, #1F4F3A 0%, #0D2B1D 100%); }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div class="min-h-screen flex items-center justify-center">
+        <div class="bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 overflow-hidden">
+            <div class="flex border-b">
+                <button onclick="switchAuthTab('login')" id="tab-login" class="w-1/2 py-4 font-bold text-[#1F4F3A] border-b-4 border-[#1F4F3A] bg-gray-50">Login</button>
+                <button onclick="switchAuthTab('register')" id="tab-register" class="w-1/2 py-4 font-bold text-gray-500 hover:bg-gray-50">Sign Up</button>
+            </div>
+            <div class="p-8">
+                <!-- Login Form -->
+                <form id="login-form" class="space-y-4">
+                    <div class="text-center mb-4">
+                        <a href="mrs.html" class="text-2xl font-bold text-[#1F4F3A]">MRS Academy</a>
+                        <p class="text-gray-500">Welcome Back!</p>
+                    </div>
+                    <input type="email" id="login-email" placeholder="Email Address" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-600 outline-none" required>
+                    <input type="password" id="login-password" placeholder="Password" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-600 outline-none" required>
+                    <div class="text-right">
+                        <button type="button" onclick="handleForgotPassword()" class="text-sm text-blue-600 hover:underline bg-transparent border-0 p-0 cursor-pointer">Forgot Password?</button>
+                    </div>
+                    <button type="submit" class="w-full bg-[#1F4F3A] text-white py-3 rounded-lg font-bold hover:bg-[#163a2b] transition">Login</button>
+                </form>
+
+                <!-- Register Form -->
+                <form id="register-form" class="space-y-4 hidden">
+                    <div class="text-center mb-4">
+                        <a href="mrs.html" class="text-2xl font-bold text-[#1F4F3A]">MRS Academy</a>
+                        <p class="text-gray-500">Create Your Account</p>
+                    </div>
+                    <input type="text" id="reg-name" placeholder="Full Name" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-600 outline-none" required>
+                    <input type="email" id="reg-email" placeholder="Email Address" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-600 outline-none" required>
+                    <select id="reg-role" onchange="toggleAdminKey()" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-600 outline-none bg-white text-gray-700">
+                        <option value="Student">I am a Student</option>
+                        <option value="Teacher">I am a Teacher</option>
+                        <option value="Admin">I am an Admin</option>
+                        <option value="Parent">I am a Parent</option>
+                    </select>
+                    <input type="password" id="reg-admin-key" placeholder="Admin Secret Key" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-600 outline-none hidden">
+                    <input type="text" id="reg-referral" placeholder="Referral Code (Optional)" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-600 outline-none">
+                    <input type="password" id="reg-password" placeholder="Create Password" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-600 outline-none" required>
+                    <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg font-bold hover:bg-green-500 transition">Register</button>
+                </form>
+                <a href="mrs.html" class="mt-6 w-full text-center block text-blue-600 hover:underline">← Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchAuthTab(tab) {
+            const loginForm = document.getElementById('login-form');
+            const regForm = document.getElementById('register-form');
+            const loginTab = document.getElementById('tab-login');
+            const regTab = document.getElementById('tab-register');
+
+            if (tab === 'login') {
+                loginForm.classList.remove('hidden');
+                regForm.classList.add('hidden');
+                loginTab.classList.add('text-blue-800', 'border-b-4', 'border-blue-800', 'bg-gray-50');
+                loginTab.classList.remove('text-gray-500', 'border-b-4');
+                regTab.classList.remove('text-blue-800', 'border-b-4', 'border-blue-800', 'bg-gray-50');
+                regTab.classList.add('text-gray-500');
+                window.history.pushState({}, '', '#login');
+            } else {
+                loginForm.classList.add('hidden');
+                regForm.classList.remove('hidden');
+                regTab.classList.add('text-blue-800', 'border-b-4', 'border-blue-800', 'bg-gray-50');
+                regTab.classList.remove('text-gray-500');
+                loginTab.classList.remove('text-blue-800', 'border-b-4', 'border-blue-800', 'bg-gray-50');
+                loginTab.classList.add('text-gray-500');
+                window.history.pushState({}, '', '#register');
+            }
+        }
+
+        function toggleAdminKey() {
+            const role = document.getElementById('reg-role').value;
+            const keyInput = document.getElementById('reg-admin-key');
+            if (role === 'Admin') keyInput.classList.remove('hidden');
+            else keyInput.classList.add('hidden');
+        }
+
+        // Handle Register
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('reg-name').value;
+            const email = document.getElementById('reg-email').value;
+            const role = document.getElementById('reg-role').value;
+            const password = document.getElementById('reg-password').value;
+            const adminKey = document.getElementById('reg-admin-key').value;
+            const referralCode = document.getElementById('reg-referral').value;
+
+            const res = await fetch('/api/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, password, role, adminKey, referralCode })
+            });
+            const data = await res.json();
+            alert(data.message);
+            if(data.success) switchAuthTab('login');
+        });
+
+        // Handle Login
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            const res = await fetch('/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+            const data = await res.json();
+            if(data.success) {
+                alert(`Welcome back, ${data.user.name}!`);
+                localStorage.setItem('userEmail', data.user.email);
+                localStorage.setItem('userName', data.user.name);
+                localStorage.setItem('userRole', data.user.role);
+                
+                if (data.user.role === 'Admin') {
+                    window.location.href = 'admin-dashboard.html';
+                } else if (data.user.role === 'Parent') {
+                    window.location.href = 'parent-portal.html';
+                } else {
+                    window.location.href = 'dashboard.html';
+                }
+            } else {
+                alert(data.message);
+            }
+        });
+
+        async function handleForgotPassword() {
+            const email = prompt("Please enter your email address to reset your password:");
+            if (email) {
+                const res = await fetch('/api/forgot-password', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+                const data = await res.json();
+                alert(data.message);
+            }
+        }
+
+        // Check URL hash on page load
+        if(window.location.hash === '#register') {
+            switchAuthTab('register');
+        }
+    </script>
+</body>
+</html>

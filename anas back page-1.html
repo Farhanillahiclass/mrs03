@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhammad Anas | Digital Creator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #030712;
+            --card: #111827;
+            --accent: #f43f5e; /* Rose Red */
+            --accent-glow: rgba(244, 63, 94, 0.3);
+            --text: #f9fafb;
+            --text-muted: #9ca3af;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background-color: var(--bg); 
+            color: var(--text); 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        html { scroll-behavior: smooth; }
+
+        nav {
+            padding: 1.5rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            background: rgba(3, 7, 18, 0.8);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .logo { font-family: 'Fira Code', monospace; font-weight: bold; color: var(--accent); font-size: 1.2rem; }
+        nav ul { display: flex; list-style: none; gap: 30px; }
+        nav ul li a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; transition: 0.3s; }
+        nav ul li a:hover { color: var(--accent); }
+
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            background: radial-gradient(circle at 50% 50%, #1e293b 0%, #030712 100%);
+        }
+        h1 { 
+            font-size: 5rem; 
+            letter-spacing: -3px; 
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .typewriter { 
+            font-family: 'Fira Code', monospace; 
+            font-size: 1.4rem; 
+            color: var(--accent); 
+            text-shadow: 0 0 15px var(--accent-glow);
+            min-height: 1.6em;
+        }
+
+        section { padding: 100px 10%; }
+        h2 { font-size: 2.5rem; margin-bottom: 50px; text-align: center; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
+        .card {
+            background: var(--card); padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.4s;
+        }
+        .card:hover { transform: scale(1.02); border-color: var(--accent); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .card h3 { color: var(--accent); margin-bottom: 15px; font-size: 1.5rem; }
+        .card p { color: var(--text-muted); margin-bottom: 25px; }
+        .tags { display: flex; gap: 10px; }
+        .tag { font-family: 'Fira Code', monospace; font-size: 0.7rem; background: rgba(255,255,255,0.05); padding: 5px 12px; border-radius: 5px; color: var(--accent); }
+
+        footer { padding: 60px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); color: var(--text-muted); }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">ANAS.CREATE</div>
+        <ul>
+            <li><a href="mrs.html">Back to MRS</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1>Muhammad Anas</h1>
+        <div class="typewriter">Video Editor & Digital Creator</div>
+    </header>
+
+    <section id="skills">
+        <h2>Creative Arsenal</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Video Editing</h3>
+                <p>Crafting visual stories with precision using Premiere Pro and After Effects. Cinematic cuts and motion graphics.</p>
+                <div class="tags"><span class="tag">Premiere</span><span class="tag">Storytelling</span></div>
+            </div>
+            <div class="card">
+                <h3>3D Modeling</h3>
+                <p>Bringing imagination to life with Blender. Creating detailed 3D assets and environments.</p>
+                <div class="tags"><span class="tag">Blender</span><span class="tag">3D Art</span></div>
+            </div>
+            <div class="card">
+                <h3>YouTube Growth</h3>
+                <p>Managing channels with SEO strategies, engaging thumbnails, and content planning.</p>
+                <div class="tags"><span class="tag">SEO</span><span class="tag">Analytics</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2>Featured Works</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Next Apply</h3>
+                <p>My YouTube channel dedicated to tech tutorials and career guidance. Over 100+ videos produced.</p>
+                <div class="tags"><span class="tag">YouTube</span><span class="tag">Content</span></div>
+            </div>
+            <div class="card">
+                <h3>Cinematic Travel Vlog</h3>
+                <p>A showcase of advanced color grading and sound design techniques.</p>
+                <div class="tags"><span class="tag">Editing</span><span class="tag">Visuals</span></div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Muhammad Anas | MRS Team</p>
+    </footer>
+</body>
+</html>

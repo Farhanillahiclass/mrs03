@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { 
+            scrollbar-width: thin; /* Firefox */
+        }
+        body::-webkit-scrollbar {
+            width: 8px;
+        }
+        body::-webkit-scrollbar-thumb {
+            background: #cbd5e1; /* Tailwind gray-300 */
+            border-radius: 4px;
+        }
+        body::-webkit-scrollbar-track {
+            background: #f1f5f9; /* Tailwind gray-100 */
+        }
+    </style>
+</head>
+<body class="flex flex-col h-screen bg-gray-100">
+
+    <header class="bg-blue-800 text-white p-4 flex items-center shadow-md">
+        <i class="fas fa-robot mr-3 text-2xl"></i>
+        <div>
+            <h1 class="font-bold">Zahra (ظہرہ)</h1>
+            <p class="text-xs text-blue-200">MRS AI Assistant</p>
+        </div>
+    </header>
+
+    <main id="chat-body" class="flex-1 p-4 overflow-y-auto space-y-4">
+        <!-- Messages will appear here -->
+    </main>
+
+    <footer class="p-2 border-t bg-white">
+        <form id="chat-form" class="flex items-center gap-2">
+            <input id="chat-input" type="text" placeholder="Ask a question..." class="flex-1 px-4 py-2 border rounded-full focus:ring-2 focus:ring-blue-600 outline-none">
+            <button type="submit" class="bg-blue-800 text-white w-10 h-10 rounded-full flex-shrink-0 hover:bg-blue-700"><i class="fas fa-paper-plane"></i></button>
+        </form>
+    </footer>
+
+    <script>
+        const chatBody = document.getElementById('chat-body');
+        const chatForm = document.getElementById('chat-form');
+        const chatInput = document.getElementById('chat-input');
+
+        let knowledgeBase = [];
+
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `max-w-[80%] p-3 rounded-lg ${sender === 'user' ? 'bg-blue-500 text-white self-end' : 'bg-gray-200 text-gray-800 self-start'}`;
+            messageDiv.textContent = text;
+            chatBody.appendChild(messageDiv);
+            setTimeout(() => chatBody.scrollTop = chatBody.scrollHeight, 10); // Ensure scroll happens after render
+        }
+
+        function getBotResponse(userInput) {
+            const lowerInput = userInput.toLowerCase();
+            
+            for (const item of knowledgeBase) {
+                if (item.keywords.some(k => lowerInput.includes(k))) {
+                    return item.response;
+                }
+            }
+            return "I'm not sure about that. Please contact our admin or check the FAQ section.";
+        }
+
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const userInput = chatInput.value.trim();
+            if (!userInput) return;
+
+            addMessage(userInput, 'user');
+            chatInput.value = '';
+
+            setTimeout(() => {
+                const botResponse = getBotResponse(userInput);
+                addMessage(botResponse, 'bot');
+            }, 1000);
+        });
+
+        // Initialize
+        async function initChat() {
+            try {
+                const res = await fetch('/api/chatbot/knowledge');
+                knowledgeBase = await res.json();
+                addMessage("Assalamu Alaikum! 👋 I'm Zahra, your AI Assistant. How can I help you with your career or studies today?", 'bot');
+            } catch (e) {
+                console.error("Failed to load chatbot knowledge");
+            }
+        }
+        initChat();
+    </script>
+</body>
+</html>
+```
+
+### 6. Expanded Islamic Library (`farhan back page.html`)
+
+The research library has been updated to include more valuable resources.
+
+```diff
+--- a/g:/MRS ! CODING1/farhan back page.html
++++ b/g:/MRS ! CODING1/farhan back page.html
+@@ -148,11 +148,24 @@
+ 
+     <div class="container" id="library">
+         <h2 class="section-title">Research Library</h2>
+-        <div class="library-card">
+-            <h3>Ar-Raheeq Al-Makhtum (The Sealed Nectar)</h3>
+-            <p>Comprehensive Seerah of Prophet Muhammad (PBUH) - Essential for understanding Divine Social Order.</p>
+-            <a href="https://www.muslim-library.com/dl/books/English_Ar_Raheeq_Al_Makhtum.pdf" target="_blank" class="btn">Download PDF</a>
++        <div class="grid">
++            <div class="library-card">
++                <h3>Ar-Raheeq Al-Makhtum</h3>
++                <p>The Sealed Nectar. A comprehensive Seerah of Prophet Muhammad (PBUH).</p>
++                <a href="https://www.muslim-library.com/dl/books/English_Ar_Raheeq_Al_Makhtum.pdf" target="_blank" class="btn">Download PDF</a>
++            </div>
++            <div class="library-card">
++                <h3>Riyad as-Salihin</h3>
++                <p>The Meadows of the Righteous. A compilation of hadith by Imam an-Nawawi.</p>
++                <a href="https://ia803106.us.archive.org/13/items/riyad-us-saliheen-plainsaks-and-simple-english-translation/Riyad-us-Saliheen-Plainsaks-and-Simple-English-Translation.pdf" target="_blank" class="btn">Download PDF</a>
++            </div>
++            <div class="library-card">
++                <h3>The Qur'an and Modern Science</h3>
++                <p>By Dr. Maurice Bucaille, exploring the harmony between the Quran and modern scientific facts.</p>
++                <a href="https://www.muslim-library.com/dl/books/English_THE_QURAN_AND_MODERN_SCIENCE.pdf" target="_blank" class="btn">Download PDF</a>
++            </div>
+         </div>
+     </div>
+ 
+     <div class="container" id="contact">

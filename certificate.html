@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Completion Certificate - MRS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap');
+        
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+        
+        .certificate-container {
+            width: 1000px;
+            height: 700px;
+            padding: 40px;
+            background-color: #fff;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 0 auto;
+            border: 10px solid #1e3a8a; /* blue-900 */
+        }
+        
+        .inner-border {
+            width: 100%;
+            height: 100%;
+            border: 2px solid #d97706; /* amber-600 */
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-image: radial-gradient(circle at center, #fdfbf7 0%, #fff 100%);
+        }
+
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            color: #1e3a8a;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: #d97706;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #4b5563;
+            margin-bottom: 30px;
+        }
+
+        .student-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: #111827;
+            border-bottom: 2px solid #d1d5db;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            min-width: 500px;
+        }
+
+        .course-text {
+            font-size: 1.2rem;
+            color: #4b5563;
+            margin-bottom: 10px;
+        }
+
+        .course-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-bottom: 40px;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 50px;
+            padding: 0 50px;
+        }
+
+        .signature-line {
+            border-top: 1px solid #111827;
+            width: 200px;
+            padding-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="py-10">
+
+    <div class="text-center mb-8 no-print">
+        <button onclick="downloadPDF()" class="bg-blue-800 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700 shadow-lg transition">
+            <i class="fas fa-download mr-2"></i> Download PDF
+        </button>
+        <button onclick="emailCertificate()" class="bg-green-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-500 shadow-lg transition ml-4">
+            <i class="fas fa-envelope mr-2"></i> Email to Me
+        </button>
+        <a href="dashboard.html" class="ml-4 text-blue-600 hover:underline">Back to Dashboard</a>
+    </div>
+
+    <div id="certificate" class="certificate-container">
+        <div class="inner-border">
+            <div class="logo-text"><i class="fas fa-award mr-2"></i> MRS Academy</div>
+            <h1 class="title">Certificate of Completion</h1>
+            <p class="subtitle">This is to certify that</p>
+            <h2 id="cert-name" class="student-name">Student Name</h2>
+            <p class="course-text">has successfully completed the course</p>
+            <h3 id="cert-course" class="course-title">Course Title</h3>
+            
+            <div class="flex items-center justify-center space-x-2 text-gray-500 mb-8">
+                <span>Date: <span id="cert-date"></span></span>
+                <span>•</span>
+                <span>Certificate ID: <span id="cert-id"></span></span>
+            </div>
+
+            <div class="footer">
+                <div class="text-center">
+                    <div class="signature-line">Muhammad Ramzan</div>
+                    <div class="text-sm text-gray-500">Head of Academy</div>
+                </div>
+                <div class="text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Seal_of_the_United_States_Department_of_Education.svg" alt="Seal" style="height: 60px; opacity: 0.8; margin: 0 auto;">
+                    <div class="text-sm text-gray-500 mt-2">Official Seal</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Populate Certificate Data
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            document.getElementById('cert-name').textContent = params.get('name') || 'Unknown Student';
+            document.getElementById('cert-course').textContent = params.get('course') || 'Unknown Course';
+            document.getElementById('cert-date').textContent = params.get('date') || new Date().toLocaleDateString();
+            document.getElementById('cert-id').textContent = params.get('id') || 'MRS-0000';
+        });
+
+        // Download PDF Function
+        function downloadPDF() {
+            const element = document.getElementById('certificate');
+            const opt = {
+                margin:       0,
+                filename:     `Certificate-${document.getElementById('cert-id').textContent}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true },
+                jsPDF:        { unit: 'px', format: [1000, 700], orientation: 'landscape' }
+            };
+
+            // Hide the button during generation (handled by selecting specific element)
+            html2pdf().set(opt).from(element).save();
+        }
+
+        // Email Certificate Function
+        async function emailCertificate() {
+            const params = new URLSearchParams(window.location.search);
+            const email = params.get('email');
+            const course = document.getElementById('cert-course').textContent;
+            
+            if (!email) {
+                alert("Email address not found in link. Please access this page from the dashboard.");
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/send-certificate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        email, 
+                        courseTitle: course, 
+                        certificateLink: window.location.href 
+                    })
+                });
+                const data = await res.json();
+                alert(data.message);
+            } catch (error) {
+                console.error('Error sending email:', error);
+                alert("Failed to send email. Please try again.");
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Volunteer Dashboard - Muslim Revive Skills{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="row mb-4">
+        <div class="col-lg-8">
+            <h1><i class="fas fa-user-tie text-primary"></i> رضاکار ڈیش بورڈ / Volunteer Dashboard</h1>
+            <p class="text-muted">Volunteer ID: {{ volunteer.volunteer_id }}</p>
+        </div>
+        <div class="col-lg-4 text-end">
+            <button class="btn btn-primary"><i class="fab fa-whatsapp"></i> گروپ میں شامل ہوں</button>
+        </div>
+    </div>
+    
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h5 class="card-title">کل گھنٹے</h5>
+                    <p class="display-6 text-primary">{{ volunteer.total_hours }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h5 class="card-title">مکمل شدہ کام</h5>
+                    <p class="display-6 text-success">{{ volunteer.total_tasks_completed }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h5 class="card-title">گروپ</h5>
+                    <p class="text-muted">{{ volunteer.assigned_group.name }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h5 class="card-title">اسٹیٹس</h5>
+                    <span class="badge bg-success">{{ volunteer.get_status_display }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header"><h5 class="mb-0"><i class="fas fa-tasks"></i> دستی شدہ کام / Assigned Tasks</h5></div>
+                <div class="card-body">
+                    {% if tasks %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead><tr><th>کام کا نام</th><th>حالت</th><th>ترجیح</th><th>مقررہ تاریخ</th><th>عمل</th></tr></thead>
+                                <tbody>
+                                    {% for task in tasks %}
+                                    <tr>
+                                        <td>{{ task.title }}</td>
+                                        <td><span class="badge bg-info">{{ task.get_status_display }}</span></td>
+                                        <td>{% if task.priority == 3 %}<span class="badge bg-danger">High</span>{% elif task.priority == 2 %}<span class="badge bg-warning">Medium</span>{% else %}<span class="badge bg-secondary">Low</span>{% endif %}</td>
+                                        <td>{{ task.due_date|date:"d M Y" }}</td>
+                                        <td><a href="#" class="btn btn-sm btn-outline-primary">تفصیل</a></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info">آپ کو کوئی کام دستی نہیں کیا گیا ہے</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header"><h5 class="mb-0"><i class="fas fa-users"></i> آپ کا گروپ / Your Group</h5></div>
+                <div class="card-body">
+                    {% if group %}
+                        <h6>{{ group.name }}</h6>
+                        <p class="text-muted small">{{ group.description }}</p>
+                        <div class="mb-3"><small>کل رکن:</small><p class="display-6">{{ group.total_members }}</p></div>
+                        {% if group.whatsapp_group_link %}<a href="{{ group.whatsapp_group_link }}" target="_blank" class="btn btn-success w-100"><i class="fab fa-whatsapp"></i> WhatsApp گروپ میں شامل ہوں</a>{% endif %}
+                    {% else %}<div class="alert alert-warning">آپ کو کسی گروپ میں شامل نہیں کیا گیا</div>{% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

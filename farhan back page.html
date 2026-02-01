@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aayatology | The Holistic Research Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #050505;
+            --card-bg: #111111;
+            --accent-gold: #c5a059;
+            --accent-blue: #00a8cc;
+            --text-gray: #b0b0b0;
+            --white: #ffffff;
+        }
+
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg-dark); color: var(--white); margin: 0; scroll-behavior: smooth; }
+        
+        /* Navigation */
+        nav { background: rgba(0,0,0,0.9); padding: 20px; position: fixed; width: 100%; z-index: 1000; text-align: center; border-bottom: 1px solid var(--accent-gold); }
+        nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; font-size: 0.9rem; text-transform: uppercase; transition: 0.3s; }
+        nav a:hover { color: var(--accent-gold); }
+
+        /* Hero Section */
+        header {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+        }
+        header h1 { font-size: 4rem; color: var(--accent-gold); margin: 0; letter-spacing: 8px; }
+        header p { font-size: 1.2rem; color: var(--text-gray); max-width: 700px; }
+
+        .container { width: 90%; max-width: 1200px; margin: auto; padding: 80px 0; }
+        .section-title { text-align: center; color: var(--accent-gold); font-size: 2.5rem; margin-bottom: 50px; text-transform: uppercase; }
+
+        /* Grid System */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .card {
+            background: var(--card-bg); padding: 30px; border-radius: 15px; border: 1px solid #222;
+            cursor: pointer; transition: 0.3s; position: relative; overflow: hidden;
+        }
+        .card:hover { border-color: var(--accent-gold); transform: translateY(-10px); background: #1a1a1a; }
+        .card h3 { color: var(--accent-gold); margin-top: 0; }
+
+        /* Islamic Golden Age Section */
+        .golden-age { background: #0a0a0a; padding: 80px 0; border-top: 2px solid var(--accent-gold); border-bottom: 2px solid var(--accent-gold); }
+
+        /* Library Section */
+        .library-card { background: linear-gradient(45deg, #111, #222); padding: 40px; border-radius: 20px; text-align: center; border: 1px dashed var(--accent-gold); }
+        .btn { background: var(--accent-gold); color: black; padding: 12px 30px; border-radius: 5px; text-decoration: none; font-weight: bold; display: inline-block; margin-top: 20px; transition: 0.3s; border: none; cursor: pointer; }
+        .btn:hover { background: white; }
+
+        /* Contact Form */
+        .contact-form { background: #111; padding: 40px; border-radius: 20px; max-width: 600px; margin: auto; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 5px; color: var(--accent-gold); }
+        .form-group input, .form-group textarea { width: 100%; padding: 12px; background: #050505; border: 1px solid #333; color: white; border-radius: 5px; }
+
+        /* Modal */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); overflow-y: auto; }
+        .modal-content { background: #111; margin: 5% auto; padding: 40px; width: 80%; max-width: 800px; border-radius: 20px; border: 1px solid var(--accent-gold); position: relative; }
+        .close { color: var(--accent-gold); position: absolute; right: 20px; top: 10px; font-size: 40px; cursor: pointer; }
+        .quran-verse { background: #1a1a1a; padding: 20px; border-left: 4px solid var(--accent-gold); margin: 20px 0; font-style: italic; color: #ddd; }
+
+        footer { text-align: center; padding: 40px; background: #000; border-top: 1px solid #222; }
+        .social-icons a { color: white; font-size: 1.5rem; margin: 0 10px; transition: 0.3s; }
+        .social-icons a:hover { color: var(--accent-gold); }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="mrs.html">Back to MRS Home</a>
+        <a href="#philosophy">Philosophy</a>
+        <a href="#golden-age">Islamic Golden Age</a>
+        <a href="#library">Library</a>
+        <a href="#library">Library</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <header>
+        <h1>AAYATOLOGY</h1>
+        <p>A Professional Synthesis of Classical Logic, Modern Physics, and Islamic Golden Age Wisdom.</p>
+        <a href="#contact" class="btn">Collaborate With Me</a>
+    </header>
+
+    <div class="container" id="philosophy">
+        <h2 class="section-title">Classical Foundations</h2>
+        <div class="grid">
+            <div class="card" onclick="openModal('socrates')"><h3>Socrates</h3><p>Critical Inquiry & The Art of Questioning.</p></div>
+            <div class="card" onclick="openModal('plato')"><h3>Plato</h3><p>Theory of Forms & The Ultimate Reality.</p></div>
+            <div class="card" onclick="openModal('pythagoras')"><h3>Pythagoras</h3><p>Mathematical Harmony (72:28).</p></div>
+            <div class="card" onclick="openModal('euclid')"><h3>Euclid</h3><p>Geometric Mizan & Structural Balance.</p></div>
+        </div>
+    </div>
+
+    <div class="golden-age" id="golden-age">
+        <div class="container">
+            <h2 class="section-title">Islamic Golden Age Portfolio</h2>
+            <div class="grid">
+                <div class="card" onclick="openModal('ibnsina')">
+                    <h3>Ibn Sina (Avicenna)</h3>
+                    <p>The Father of Modern Medicine & Metaphysics.</p>
+                </div>
+                <div class="card" onclick="openModal('biruni')">
+                    <h3>Al-Biruni</h3>
+                    <p>Master of Geodesy & Astronomical Precision.</p>
+                </div>
+                <div class="card" onclick="openModal('khwarizmi')">
+                    <h3>Al-Khwarizmi</h3>
+                    <p>The Architect of Algebra & Algorithmic Logic.</p>
+                </div>
+                <div class="card" onclick="openModal('haytham')">
+                    <h3>Ibn al-Haytham</h3>
+                    <p>The Founder of Optics & The Scientific Method.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="library">
+        <h2 class="section-title">Research Library</h2>
+        <div class="library-card">
+            <h3>Ar-Raheeq Al-Makhtum (The Sealed Nectar)</h3>
+            <p>Comprehensive Seerah of Prophet Muhammad (PBUH) - Essential for understanding Divine Social Order.</p>
+            <a href="https://www.muslim-library.com/dl/books/English_Ar_Raheeq_Al_Makhtum.pdf" target="_blank" class="btn">Download PDF</a>
+        </div>
+        <div></div>
+            <div class="library-card">
+                 <h3>The Quran and Modern Science</h3>
+                 <p>By Dr. Maurice Bucaille, exploring the harmony between the Quran and modern scientific facts.</p>
+                 <a href="https://al-islam.org/bible-quran-and-science-maurice-bucaille/quran-and-modern-science" target="_blank" class="btn">Download PDF</a>
+            </div>
+            <div class="library-card">
+                <h3>Don't Be Sad</h3>
+                <p>A practical guide to overcoming anxiety and sorrow from an Islamic perspective by Dr. Aydh al-Qarni.</p>
+                <a href="https://ia601300.us.archive.org/1/items/DontBeSad_201312/Dont%20Be%20Sad.pdf" target="_blank" class="btn">Download PDF</a>
+            </div>
+            <div class="library-card">
+                <h3>Lost Islamic History</h3>
+                <p>Reclaiming Muslim Civilisation from the Past by Firas Alkhateeb.</p>
+                <a href="https://dawahbooks.com.pk/products/lost-islamic-history-reclaiming-muslim-civilisation-from-the-past?srsltid=AfmBOopwK2E533Jp-N1XQLa3AaKEosqkk4ZoAUPCtK7nA7io0K9wprTd" target="_blank" class="btn">Download PDF</a>
+            </div>
+            <div class="library-card" style="display: flex; align-items: center; justify-content: center; border-style: dashed;">
+                <a href="#" class="btn" style="margin: 0;">+ Add More Books</a>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container" id="contact">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-form">
+            <form>
+                <div class="form-group"><label>Full Name</label><input type="text" required></div>
+                <div class="form-group"><label>Email Address</label><input type="email" required></div>
+                <div class="form-group"><label>Message</label><textarea rows="5" required></textarea></div>
+                <button type="submit" class="btn" style="width: 100%;">Send Research Inquiry</button>
+            </form>
+            <div class="social-icons" style="margin-top: 30px; text-align: center;">
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-researchgate"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalBox" class="modal">
+        <div class="modal-content" id="modalBody"></div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Aayatology | Holistic Research Portfolio</p>
+    </footer>
+
+    <script>
+        const data = {
+            socrates: {
+                title: "Socrates",
+                history: "The father of Western philosophy, known for the Socratic method of questioning.",
+                angle: "I use Socratic questioning to deconstruct materialistic science and reveal the underlying spiritual reality.",
+                quran: "أَفَلَا تَتَفَكَّرُونَ (Will you not then reflect? - 6:50)",
+                wiki: "https://en.wikipedia.org/wiki/Socrates"
+            },
+            ibnsina: {
+                title: "Ibn Sina (Avicenna)",
+                history: "Author of 'The Canon of Medicine', he ruled medical science for 600 years.",
+                angle: "Connecting Avicenna's Metaphysics with modern Quantum Biology and the healing power of Quranic herbs.",
+                quran: "وَنُنَزِّلُ مِنَ الْقُرْآنِ مَا هُوَ شِفَاءٌ (And We send down of the Quran that which is a healing - 17:82)",
+                wiki: "https://en.wikipedia.org/wiki/Avicenna"
+            },
+            biruni: {
+                title: "Al-Biruni",
+                history: "A polymath who calculated the Earth's circumference and studied Indian culture.",
+                angle: "Applying Biruni’s precision in measurement to the Quranic concept of 'Taqdeer' (Measure).",
+                quran: "إِنَّا كُلَّ شَيْءٍ خَلَقْنَاهُ بِقَدَرٍ (Indeed, all things We created with divine measure - 54:49)",
+                wiki: "https://en.wikipedia.org/wiki/Al-Biruni"
+            },
+            plato: {
+                title: "Plato",
+                history: "A student of Socrates, he founded the Academy in Athens and wrote philosophical dialogues.",
+                angle: "Analyzing Plato's Theory of Forms as a precursor to understanding the unseen world (Ghaib) mentioned in the Quran.",
+                quran: "عَالِمُ الْغَيْبِ فَلَا يُظْهِرُ عَلَىٰ غَيْبِهِ أَحَدًا (He is the Knower of the unseen, and He does not disclose His unseen to anyone - 72:26)",
+                wiki: "https://en.wikipedia.org/wiki/Plato"
+            },
+            pythagoras: {
+                title: "Pythagoras",
+                history: "An ancient Ionian Greek philosopher and the eponymous founder of Pythagoreanism.",
+                angle: "Exploring the mathematical harmony in the universe, as understood by Pythagoras, and its link to the Quranic concept of Mizan (balance).",
+                quran: "وَالسَّمَاءَ رَفَعَهَا وَوَضَعَ الْمِيزَانَ (And the heaven He raised and imposed the balance - 55:7)",
+                wiki: "https://en.wikipedia.org/wiki/Pythagoras"
+            },
+            euclid: {
+                title: "Euclid",
+                history: "A Greek mathematician, often referred to as the 'founder of geometry'.",
+                angle: "Using Euclidean geometry to understand the principles of structure and order in both the physical world and Islamic art.",
+                quran: "الَّذِي خَلَقَ سَبْعَ سَمَاوَاتٍ طِبَاقًا ۖ مَّا تَرَىٰ فِي خَلْقِ الرَّحْمَٰنِ مِن تَفَاوُتٍ (He who created seven heavens in layers. You do not see in the creation of the Most Merciful any inconsistency. - 67:3)",
+                wiki: "https://en.wikipedia.org/wiki/Euclid"
+            }
+        };
+
+       
+           html
+        function openModal(id) {
+            const item = data[id] || {title: "Coming Soon", history: "Research in progress...", angle: "Adding more details soon!", quran: "", wiki: "#"};
+            const modal = document.getElementById('modalBox');
+            document.getElementById('modalBody').innerHTML = `
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2 style="color:var(--accent-gold)">${item.title}</h2>
+                <p><strong>History:</strong> ${item.history}</p>
+                <p><strong>Research Angle:</strong> ${item.angle}</p>
+                <div class="quran-verse"><strong>Quranic Link:</strong><br>${item.quran}</div>
+                <a href="${item.wiki}" target="_blank" class="btn">Read Wikipedia</a>
+            `;
+            modal.style.display = "block";
+        }
+
+        function closeModal() { document.getElementById('modalBox').style.display = "none"; }
+    </script>
+</body>
+</html>

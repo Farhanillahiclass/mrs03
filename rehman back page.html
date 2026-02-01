@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahsan Ali | Emotional Intelligence Trainer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #030712;
+            --card: #111827;
+            --accent: #10b981; /* Emerald Green */
+            --accent-glow: rgba(16, 185, 129, 0.3);
+            --text: #f9fafb;
+            --text-muted: #9ca3af;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background-color: var(--bg); 
+            color: var(--text); 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        html { scroll-behavior: smooth; }
+
+        nav {
+            padding: 1.5rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            background: rgba(3, 7, 18, 0.8);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .logo { font-family: 'Fira Code', monospace; font-weight: bold; color: var(--accent); font-size: 1.2rem; }
+        nav ul { display: flex; list-style: none; gap: 30px; }
+        nav ul li a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; transition: 0.3s; }
+        nav ul li a:hover { color: var(--accent); }
+
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            background: radial-gradient(circle at 50% 50%, #1e293b 0%, #030712 100%);
+        }
+        h1 { 
+            font-size: 5rem; 
+            letter-spacing: -3px; 
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .typewriter { 
+            font-family: 'Fira Code', monospace; 
+            font-size: 1.4rem; 
+            color: var(--accent); 
+            text-shadow: 0 0 15px var(--accent-glow);
+            min-height: 1.6em;
+        }
+
+        section { padding: 100px 10%; }
+        h2 { font-size: 2.5rem; margin-bottom: 50px; text-align: center; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
+        .card {
+            background: var(--card); padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.4s;
+        }
+        .card:hover { transform: scale(1.02); border-color: var(--accent); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .card h3 { color: var(--accent); margin-bottom: 15px; font-size: 1.5rem; }
+        .card p { color: var(--text-muted); margin-bottom: 25px; }
+        .tags { display: flex; gap: 10px; }
+        .tag { font-family: 'Fira Code', monospace; font-size: 0.7rem; background: rgba(255,255,255,0.05); padding: 5px 12px; border-radius: 5px; color: var(--accent); }
+
+        footer { padding: 60px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); color: var(--text-muted); }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">AHSAN.EQ</div>
+        <ul>
+            <li><a href="mrs.html">Back to MRS</a></li>
+            <li><a href="#expertise">Expertise</a></li>
+            <li><a href="#experience">Experience</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1>Ahsan Ali</h1>
+        <div class="typewriter">Emotional Intelligence Trainer</div>
+    </header>
+
+    <section id="expertise">
+        <h2>Core Expertise</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Emotional Intelligence</h3>
+                <p>Helping individuals understand and manage their emotions for better decision-making and relationships.</p>
+                <div class="tags"><span class="tag">Psychology</span><span class="tag">Self-Awareness</span></div>
+            </div>
+            <div class="card">
+                <h3>Career Counseling</h3>
+                <p>Guiding students and professionals to find their true calling and navigate their career paths.</p>
+                <div class="tags"><span class="tag">Mentorship</span><span class="tag">Growth</span></div>
+            </div>
+            <div class="card">
+                <h3>Soft Skills Training</h3>
+                <p>Developing essential interpersonal skills like communication, leadership, and adaptability.</p>
+                <div class="tags"><span class="tag">Leadership</span><span class="tag">Communication</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <h2>Work Experience</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>PSER Internship</h3>
+                <p>Data & Registration Intern at Government of Punjab. Conducted field visits and managed socio-economic data.</p>
+                <div class="tags"><span class="tag">2024-2025</span><span class="tag">Govt</span></div>
+            </div>
+            <div class="card">
+                <h3>MRS Academy</h3>
+                <p>Lead Trainer for Emotional Intelligence and Personal Development workshops.</p>
+                <div class="tags"><span class="tag">Training</span><span class="tag">Education</span></div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Ahsan Ali | MRS Team</p>
+    </footer>
+</body>
+</html>

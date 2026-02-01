@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRS Blog - Insights & Articles</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = { darkMode: 'class' }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .hero-bg { background: linear-gradient(135deg, #1F4F3A 0%, #0D2B1D 100%); }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white dark:bg-gray-900 shadow-lg z-50 transition-colors duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="w-10 h-10 bg-blue-800 rounded-full flex items-center justify-center text-white font-bold">MRS</div>
+                <span class="ml-3 text-xl font-semibold text-blue-800 dark:text-blue-400">MRS Blog</span>
+            </div>
+            <div class="flex items-center space-x-6">
+                <a href="mrs.html" class="text-blue-800 dark:text-blue-400 hover:text-blue-600 font-medium">Back to Home</a>
+                <button onclick="openPostModal()" class="bg-blue-800 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition shadow-md"><i class="fas fa-pen mr-2"></i>Write Article</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="hero-bg text-white pt-32 pb-20 text-center">
+        <div class="container mx-auto px-6">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Community Insights</h1>
+            <p class="text-xl text-blue-100">Articles by our Teachers and Students</p>
+        </div>
+    </header>
+
+    <!-- Blog Posts Grid -->
+    <section class="py-16">
+        <div class="container mx-auto px-6">
+            <div id="posts-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Posts will be loaded here -->
+                <div class="col-span-full text-center text-gray-500">Loading articles...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Write Article Modal -->
+    <div id="post-modal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-xl max-w-2xl w-full mx-4 overflow-hidden shadow-2xl">
+            <div class="p-6 border-b dark:border-gray-700 flex justify-between items-center">
+                <h3 class="text-2xl font-bold text-blue-800 dark:text-blue-400">Write New Article</h3>
+                <button onclick="document.getElementById('post-modal').classList.add('hidden')" class="text-gray-500 hover:text-red-500"><i class="fas fa-times text-xl"></i></button>
+            </div>
+            <div class="p-6">
+                <form id="post-form" class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 dark:text-gray-300 mb-2 font-bold">Title</label>
+                        <input type="text" id="post-title" class="w-full px-4 py-3 border dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none dark:bg-gray-700 dark:text-white" required>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 dark:text-gray-300 mb-2 font-bold">Content</label>
+                        <textarea id="post-content" rows="6" class="w-full px-4 py-3 border dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none dark:bg-gray-700 dark:text-white" required></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-blue-800 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition">Publish Article</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check Dark Mode
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+
+        // Fetch Posts
+        async function loadPosts() {
+            try {
+                const res = await fetch('/api/posts');
+                const posts = await res.json();
+                const container = document.getElementById('posts-container');
+                
+                if(posts.length === 0) {
+                    container.innerHTML = '<div class="col-span-full text-center text-gray-500">No articles yet. Be the first to write one!</div>';
+                    return;
+                }
+
+                container.innerHTML = posts.map(post => `
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 border border-gray-100 dark:border-gray-700 flex flex-col">
+                        <div class="p-6 flex-grow">
+                            <div class="flex items-center mb-4">
+                                <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded uppercase">${post.role || 'Member'}</span>
+                                <span class="text-gray-400 text-xs ml-auto">${new Date(post.date).toLocaleDateString()}</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-blue-900 dark:text-white mb-3">${post.title}</h3>
+                            <p class="text-gray-600 dark:text-gray-300 line-clamp-3">${post.content}</p>
+                        </div>
+                        <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700 border-t border-gray-100 dark:border-gray-600 flex items-center">
+                            <div class="w-8 h-8 bg-blue-800 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
+                                ${post.author.charAt(0).toUpperCase()}
+                            </div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-200">${post.author}</span>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (e) {
+                console.error("Error loading posts:", e);
+            }
+        }
+
+        // Open Modal Logic
+        function openPostModal() {
+            const email = localStorage.getItem('userEmail');
+            if (!email) {
+                alert("Please login on the main page to write an article.");
+                window.location.href = "mrs.html";
+                return;
+            }
+            document.getElementById('post-modal').classList.remove('hidden');
+        }
+
+        // Handle Post Submission
+        document.getElementById('post-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const title = document.getElementById('post-title').value;
+            const content = document.getElementById('post-content').value;
+            const author = localStorage.getItem('userName') || 'Anonymous';
+            const role = localStorage.getItem('userRole') || 'Student';
+
+            try {
+                const res = await fetch('/api/posts', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title, content, author, role })
+                });
+                
+                const data = await res.json();
+                if (data.success) {
+                    alert("Article published!");
+                    document.getElementById('post-modal').classList.add('hidden');
+                    document.getElementById('post-form').reset();
+                    loadPosts(); // Refresh list
+                }
+            } catch (e) {
+                alert("Failed to publish article.");
+            }
+        });
+
+        // Initial Load
+        loadPosts();
+    </script>
+</body>
+</html>

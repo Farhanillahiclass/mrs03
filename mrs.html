@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muslim Revive Skills (MRS) | Professional Excellence & Islamic Values</title>
+    <meta name="description" content="Empowering Muslim Professionals with industry-relevant training, Islamic values, and career growth. Join MRS today.">
+    <meta name="keywords" content="Muslim Revive Skills, MRS, Islamic Finance, Halal Business, Web Development, Career Counseling, Mentorship">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        mrs: {
+                            primary: '#1F4F3A', // Deep Green
+                            secondary: '#D4AF37', // Gold
+                            accent: '#0066CC', // Professional Blue
+                            light: '#F3F4F6',
+                            dark: '#111827'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Open Sans', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@300;400;600&display=swap');
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .hero-bg {
+            background: linear-gradient(135deg, #1F4F3A 0%, #0D2B1D 100%);
+        }
+        
+        .btn-primary {
+            background: #D4AF37;
+            color: #1F4F3A;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background: #C5A028;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .skill-bar {
+            transition: width 1.5s ease-in-out;
+        }
+        
+        .modal {
+            transition: all 0.3s ease;
+        }
+        
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Chatbot Styles */
+        #chatbot-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #1F4F3A;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 999;
+            transition: transform 0.3s;
+        }
+        #chatbot-toggle:hover { transform: scale(1.1); }
+        #chatbot-window {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 500px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            z-index: 1000;
+        }
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .scrollbar-hide {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+
+        /* --- NEW CHATBOT STYLES --- */
+        :root {
+            --primary-green: #1F4F3A;
+            --secondary-gold: #D4AF37;
+            --accent-blue: #0066CC;
+            --light-bg: #F5F5F5;
+            --text-dark: #333333;
+        }
+
+        #chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-family: 'Open Sans', sans-serif;
+            z-index: 9999;
+        }
+
+        .chatbot-button {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(31, 79, 58, 0.3);
+            transition: all 0.3s ease;
+            flex-direction: column;
+            font-size: 24px;
+            color: white;
+            text-align: center;
+        }
+
+        .chatbot-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(31, 79, 58, 0.4);
+        }
+
+        .chatbot-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #FF6B6B;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .chatbot-window {
+            width: 380px;
+            height: 600px;
+            max-height: 80vh;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
+            display: none;
+            flex-direction: column;
+            animation: slideUp 0.3s ease;
+            overflow: hidden;
+            margin-bottom: 80px; /* Space for button */
+        }
+
+        .chatbot-window.active {
+            display: flex;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chatbot-header {
+            background: linear-gradient(135deg, var(--primary-green), var(--accent-blue));
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-title h3 { margin: 0; font-size: 18px; font-weight: bold; font-family: 'Montserrat', sans-serif; }
+        .chatbot-title p { margin: 2px 0 0 0; font-size: 12px; opacity: 0.9; }
+
+        .chatbot-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: var(--light-bg);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .message {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            animation: fadeIn 0.3s ease;
+            max-width: 85%;
+        }
+
+        .bot-message { align-self: flex-start; }
+        .user-message { align-self: flex-end; flex-direction: row-reverse; }
+
+        .bot-message p {
+            background: white;
+            padding: 12px 16px;
+            border-radius: 12px 12px 12px 0;
+            border-left: 4px solid var(--primary-green);
+            margin: 0;
+            color: var(--text-dark);
+            font-size: 14px;
+            line-height: 1.4;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .user-message p {
+            background: var(--primary-green);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 12px 12px 0 12px;
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.4;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .chatbot-input-area {
+            display: flex;
+            padding: 15px;
+            background: white;
+            border-top: 1px solid #E0E0E0;
+            gap: 10px;
+        }
+
+        .chatbot-input {
+            flex: 1;
+            border: 1px solid #DDD;
+            border-radius: 24px;
+            padding: 10px 15px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .chatbot-input:focus {
+            border-color: var(--primary-green);
+        }
+
+        .chatbot-send {
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-gold));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+
+        .chatbot-send:hover { transform: scale(1.05); }
+
+        .loading-dots { display: flex; gap: 4px; padding: 12px 16px; background: white; border-radius: 12px; width: fit-content; }
+        .loading-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--primary-green); animation: bounce 1.4s infinite; }
+        .loading-dot:nth-child(2) { animation-delay: 0.2s; }
+        .loading-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes bounce {
+            0%, 80%, 100% { opacity: 0.3; transform: translateY(0); }
+            40% { opacity: 1; transform: translateY(-5px); }
+        }
+
+        .feedback-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 5px;
+            justify-content: flex-end;
+        }
+        .feedback-btn {
+            background: none; border: none; cursor: pointer; font-size: 12px; opacity: 0.6; transition: opacity 0.2s;
+        }
+        .feedback-btn:hover { opacity: 1; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white dark:bg-gray-900 shadow-lg z-50 transition-colors duration-300" role="navigation" aria-label="Main navigation">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-mrs-primary rounded-full flex items-center justify-center text-white font-bold text-xl border-2 border-mrs-secondary" aria-label="MRS Logo">MRS</div>
+                    <span class="ml-3 text-xl font-bold text-mrs-primary dark:text-white font-heading">Muslim Revive Skills</span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-6" role="menubar">
+                    <a href="#home" class="text-mrs-primary dark:text-white hover:text-mrs-secondary font-semibold">Home</a>
+                    <a href="#programs" class="text-mrs-primary dark:text-white hover:text-mrs-secondary font-semibold">Programs</a>
+                    <a href="#features" class="text-mrs-primary dark:text-white hover:text-mrs-secondary font-semibold">Features</a>
+                    <a href="admissions.html" class="text-mrs-primary dark:text-white hover:text-mrs-secondary font-semibold">Admissions</a>
+                    <a href="#pricing" class="text-mrs-primary dark:text-white hover:text-mrs-secondary font-semibold">Pricing</a>
+                    <a href="student-life.html" class="text-mrs-primary dark:text-white hover:text-mrs-secondary font-semibold">Community</a>
+                    <a href="abajad index.html" class="text-mrs-primary dark:text-white font-bold border-b-2 border-mrs-secondary pb-1">LMS</a>
+                    <div class="h-6 w-px bg-gray-300 mx-2"></div>
+                    <button onclick="toggleDarkMode()" class="text-mrs-primary dark:text-mrs-secondary hover:text-mrs-accent transition-colors"><i class="fas fa-moon dark:hidden"></i><i class="fas fa-sun hidden dark:inline"></i></button>
+                    <div id="auth-buttons-desktop" class="flex items-center space-x-4"></div>
+                </div>
+                
+                <div class="md:hidden">
+                    <button id="menu-btn" class="text-mrs-primary dark:text-white" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobile-menu">
+                        <i class="fas fa-bars text-2xl" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4">
+                <div class="flex flex-col space-y-4">
+                    <a href="#home" class="text-mrs-primary font-semibold">Home</a>
+                    <a href="#programs" class="text-mrs-primary font-semibold">Programs</a>
+                    <a href="admissions.html" class="text-mrs-primary font-semibold">Admissions</a>
+                    <a href="login.html" class="text-mrs-primary font-semibold">Login</a>
+                    <div id="auth-buttons-mobile" class="flex flex-col space-y-2 mt-2"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg text-white pt-32 pb-20">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center fade-in">
+                <span class="inline-block py-1 px-3 rounded-full bg-white bg-opacity-20 border border-mrs-secondary text-mrs-secondary text-sm font-bold mb-4 tracking-wide uppercase">Empowering Muslim Professionals</span>
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight font-heading">Revive Your Skills, <br><span class="text-mrs-secondary">Transform Your Future</span></h1>
+                <p class="text-xl md:text-2xl mb-8 text-gray-200">Where Islamic Values Meet Professional Excellence. Join a global community of learners and leaders.</p>
+                
+                <div class="flex flex-col sm:flex-row justify-center gap-4 mt-8">
+                    <a href="login.html#register" class="btn-primary px-8 py-4 rounded-full font-bold text-mrs-primary shadow-lg">
+                        Start Learning Today
+                    </a>
+                    <a href="#consultation" class="bg-transparent border-2 border-white px-8 py-4 rounded-full font-bold text-white shadow-lg hover:bg-white hover:text-mrs-primary transition-all">
+                        Schedule Free Consultation
+                    </a>
+                </div>
+
+                <div class="mt-12 flex flex-wrap justify-center gap-6 text-gray-300 text-sm font-semibold">
+                    <span><i class="fas fa-check-circle text-mrs-secondary mr-2"></i> 500+ Industry Courses</span>
+                    <span><i class="fas fa-check-circle text-mrs-secondary mr-2"></i> Islamic Values Integration</span>
+                    <span><i class="fas fa-check-circle text-mrs-secondary mr-2"></i> Expert Mentorship</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Stats Section -->
+    <section class="bg-mrs-primary py-10 border-t border-white/10">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white">
+                <div>
+                    <div class="text-4xl font-bold text-mrs-secondary font-heading">500+</div>
+                    <div class="text-sm uppercase tracking-wider mt-1">Courses Available</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold text-mrs-secondary font-heading">50k+</div>
+                    <div class="text-sm uppercase tracking-wider mt-1">Muslim Professionals</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold text-mrs-secondary font-heading">95%</div>
+                    <div class="text-sm uppercase tracking-wider mt-1">Job Placement Rate</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold text-mrs-secondary font-heading">20+</div>
+                    <div class="text-sm uppercase tracking-wider mt-1">Countries Reached</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features -->
+    <section id="features" class="py-20 bg-white dark:bg-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-mrs-primary dark:text-white mb-4 font-heading">Why Choose MRS?</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">Professional Excellence Meets Islamic Values</p>
+            </div>
+            
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="p-6 bg-gray-50 dark:bg-gray-700 rounded-xl text-center hover:shadow-lg transition">
+                    <div class="w-16 h-16 bg-mrs-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-star-and-crescent text-2xl text-mrs-primary dark:text-mrs-secondary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Islamic Integration</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">Unique blend of professional skills with Islamic ethics and values.</p>
+                </div>
+                <div class="p-6 bg-gray-50 dark:bg-gray-700 rounded-xl text-center hover:shadow-lg transition">
+                    <div class="w-16 h-16 bg-mrs-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-briefcase text-2xl text-mrs-primary dark:text-mrs-secondary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Job-Ready Skills</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">Career services, resume building, and placement support.</p>
+                </div>
+                <div class="p-6 bg-gray-50 dark:bg-gray-700 rounded-xl text-center hover:shadow-lg transition">
+                    <div class="w-16 h-16 bg-mrs-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-certificate text-2xl text-mrs-primary dark:text-mrs-secondary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Recognized Certs</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">Industry-recognized credentials to boost your portfolio.</p>
+                </div>
+                <div class="p-6 bg-gray-50 dark:bg-gray-700 rounded-xl text-center hover:shadow-lg transition">
+                    <div class="w-16 h-16 bg-mrs-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-users text-2xl text-mrs-primary dark:text-mrs-secondary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Global Community</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">Network with like-minded professionals worldwide.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Programs Section -->
+    <section id="programs" class="py-20 bg-mrs-light dark:bg-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-mrs-primary dark:text-white mb-4 font-heading">Signature Programs</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-300">Comprehensive tracks for career and spiritual growth</p>
+            </div>
+
+            <div id="courses-grid" class="grid md:grid-cols-3 gap-8">
+                <!-- Course 1 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover border border-gray-100">
+                    <div class="h-48 bg-mrs-primary flex items-center justify-center">
+                        <i class="fas fa-laptop-code text-6xl text-mrs-secondary"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded">Technology</span>
+                            <span class="text-2xl font-bold text-mrs-primary">$49</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 dark:text-gray-800">Full Stack Web Dev</h3>
+                        <p class="text-gray-600 text-sm mb-4">Master HTML, CSS, JS, and Node.js to become a professional developer.</p>
+                        <button onclick="openPaymentModal('Full Stack Web Dev', 49)" class="w-full bg-mrs-primary text-white py-2 rounded-lg hover:bg-green-800 transition">Enroll Now</button>
+                    </div>
+                </div>
+
+                <!-- Course 2 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover border border-gray-100">
+                    <div class="h-48 bg-mrs-primary flex items-center justify-center">
+                        <i class="fas fa-balance-scale text-6xl text-mrs-secondary"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded">Islamic Skills</span>
+                            <span class="text-2xl font-bold text-mrs-primary">$39</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 dark:text-gray-800">Islamic Business Ethics</h3>
+                        <p class="text-gray-600 text-sm mb-4">Learn Halal compliance, ethical leadership, and fair trade practices.</p>
+                        <button onclick="openPaymentModal('Islamic Business Ethics', 39)" class="w-full bg-mrs-primary text-white py-2 rounded-lg hover:bg-green-800 transition">Enroll Now</button>
+                    </div>
+                </div>
+
+                <!-- Course 3 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover border border-gray-100">
+                    <div class="h-48 bg-mrs-primary flex items-center justify-center">
+                        <i class="fas fa-chart-line text-6xl text-mrs-secondary"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="bg-purple-100 text-purple-800 text-xs font-bold px-2 py-1 rounded">Business</span>
+                            <span class="text-2xl font-bold text-mrs-primary">$59</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 dark:text-gray-800">Digital Marketing</h3>
+                        <p class="text-gray-600 text-sm mb-4">Master SEO, social media, and content strategy for business growth.</p>
+                        <button onclick="openPaymentModal('Digital Marketing', 59)" class="w-full bg-mrs-primary text-white py-2 rounded-lg hover:bg-green-800 transition">Enroll Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 bg-white dark:bg-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-mrs-primary dark:text-white mb-4 font-heading">Flexible Pricing Plans</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-300">Choose the plan that fits your career goals</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Free Plan -->
+                <div class="border border-gray-200 rounded-xl p-8 text-center hover:shadow-xl transition">
+                    <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">Free</h3>
+                    <p class="text-4xl font-bold text-mrs-primary mb-6">$0</p>
+                    <ul class="text-left space-y-3 mb-8 text-gray-600 dark:text-gray-300">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i> Limited Courses</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i> Community Access</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i> AI Chatbot Support</li>
+                    </ul>
+                    <a href="login.html#register" class="block w-full py-3 border-2 border-mrs-primary text-mrs-primary font-bold rounded-lg hover:bg-mrs-primary hover:text-white transition">Get Started</a>
+                </div>
+
+                <!-- Starter Plan -->
+                <div class="border-2 border-mrs-secondary rounded-xl p-8 text-center shadow-xl relative transform scale-105 bg-white dark:bg-gray-700">
+                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-mrs-secondary text-mrs-primary px-4 py-1 rounded-full text-sm font-bold uppercase">Most Popular</div>
+                    <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">Starter</h3>
+                    <p class="text-4xl font-bold text-mrs-primary mb-6">$29<span class="text-lg text-gray-500 font-normal">/mo</span></p>
+                    <ul class="text-left space-y-3 mb-8 text-gray-600 dark:text-gray-300">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i> Unlimited Courses</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i> Basic Mentorship</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i> Certificates</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i> Job Portal Access</li>
+                    </ul>
+                    <a href="login.html#register" class="block w-full py-3 bg-mrs-primary text-white font-bold rounded-lg hover:bg-green-800 transition">Subscribe Now</a>
+                </div>
+
+                <!-- Professional Plan -->
+                <div class="border border-gray-200 rounded-xl p-8 text-center hover:shadow-xl transition">
+                    <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">Professional</h3>
+                    <p class="text-4xl font-bold text-mrs-primary mb-6">$99<span class="text-lg text-gray-500 font-normal">/mo</span></p>
+                    <ul class="text-left space-y-3 mb-8 text-gray-600 dark:text-gray-300">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i> All Starter Features</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i> 1-on-1 Mentorship</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i> Career Counseling</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i> Portfolio Building</li>
+                    </ul>
+                    <a href="login.html#register" class="block w-full py-3 border-2 border-mrs-primary text-mrs-primary font-bold rounded-lg hover:bg-mrs-primary hover:text-white transition">Go Pro</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 bg-mrs-primary text-white relative overflow-hidden">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4 font-heading">Success Stories</h2>
+                <p class="text-xl text-blue-200">Hear from professionals who transformed their careers with MRS</p>
+                <button onclick="openReviewModal()" class="mt-6 bg-mrs-secondary text-mrs-primary px-6 py-2 rounded-full font-bold hover:bg-white transition shadow-lg">
+                    <i class="fas fa-pen mr-2"></i> Write a Review
+                </button>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Reviews will be loaded here dynamically -->
+                <div id="reviews-container" class="col-span-3 grid md:grid-cols-3 gap-8"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-mrs-primary text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-6">
+                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center mr-3 border-2 border-mrs-secondary">
+                            <span class="text-mrs-primary font-bold">MRS</span>
+                        </div>
+                        <span class="text-xl font-bold font-heading">Muslim Revive Skills</span>
+                    </div>
+                    <p class="text-gray-300 mb-6">Empowering Muslim Professionals | Reviving Skills | Building Futures</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="social-icon w-8 h-8 bg-white/10 rounded-full flex items-center justify-center hover:bg-mrs-secondary hover:text-mrs-primary transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-icon w-8 h-8 bg-white/10 rounded-full flex items-center justify-center hover:bg-mrs-secondary hover:text-mrs-primary transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-icon w-8 h-8 bg-white/10 rounded-full flex items-center justify-center hover:bg-mrs-secondary hover:text-mrs-primary transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-icon w-8 h-8 bg-white/10 rounded-full flex items-center justify-center hover:bg-mrs-secondary hover:text-mrs-primary transition">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-mrs-secondary font-heading">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#home" class="text-gray-300 hover:text-mrs-secondary transition">Home</a></li>
+                        <li><a href="#programs" class="text-gray-300 hover:text-mrs-secondary transition">Programs</a></li>
+                        <li><a href="admissions.html" class="text-gray-300 hover:text-mrs-secondary transition">Admissions</a></li>
+                        <li><a href="student-life.html" class="text-gray-300 hover:text-mrs-secondary transition">Community</a></li>
+                        <li><a href="login.html" class="text-gray-300 hover:text-mrs-secondary transition">Login</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-mrs-secondary font-heading">Services</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-mrs-secondary transition">Career Counseling</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-mrs-secondary transition">Mentorship</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-mrs-secondary transition">Job Portal</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-mrs-secondary transition">Skill Assessment</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-mrs-secondary font-heading">Stay Connected</h4>
+                    <p class="text-gray-300 mb-4">Join our newsletter for career tips and Islamic insights.</p>
+                    <form class="flex">
+                        <input type="email" placeholder="Your email" class="flex-1 px-4 py-2 bg-white/10 border border-white/20 rounded-l-lg text-white placeholder-gray-400 focus:outline-none focus:border-mrs-secondary">
+                        <button type="submit" class="bg-mrs-secondary text-mrs-primary px-4 py-2 rounded-r-lg hover:bg-yellow-500 font-bold transition">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/10 mt-12 pt-8 text-center text-gray-400 text-sm">
+                <p>&copy; 2026 Muslim Revive Skills. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Payment Modal -->
+    <div id="payment-modal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-xl max-w-md w-full mx-4 overflow-hidden shadow-2xl">
+            <div class="bg-blue-800 p-4 text-white flex justify-between items-center">
+                <h3 class="font-bold text-lg">Secure Enrollment</h3>
+                <button onclick="document.getElementById('payment-modal').classList.add('hidden')" class="text-white hover:text-gray-200"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="p-6">
+                <div class="mb-6 bg-blue-50 dark:bg-gray-700 p-4 rounded-lg border border-blue-100 dark:border-gray-600">
+                    <p class="text-sm text-gray-600 dark:text-gray-300">Course:</p>
+                    <h4 id="pay-course-title" class="font-bold text-blue-900 dark:text-white text-lg">Course Title</h4>
+                    <div class="flex justify-between items-end mt-2">
+                        <span class="text-sm text-gray-600 dark:text-gray-300">Total:</span>
+                        <span id="pay-course-price" class="font-bold text-2xl text-green-600">$0</span>
+                    </div>
+                </div>
+                
+                <!-- Teacher Payment Info -->
+                <div id="teacher-payment-info" class="mb-6 bg-yellow-50 dark:bg-yellow-900 p-4 rounded-lg border border-yellow-200 dark:border-yellow-700 hidden">
+                    <h4 class="font-bold text-yellow-800 dark:text-yellow-200 text-sm mb-2">Transfer Payment To:</h4>
+                    <p class="text-sm text-gray-700 dark:text-gray-300"><span class="font-semibold">Method:</span> <span id="pay-method"></span></p>
+                    <p class="text-sm text-gray-700 dark:text-gray-300"><span class="font-semibold">Account:</span> <span id="pay-account" class="font-mono select-all"></span></p>
+                    <p class="text-xs text-gray-500 mt-2">Please transfer the amount and proceed.</p>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Discount Coupon</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="coupon-code" placeholder="Enter Code" class="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600 outline-none dark:bg-gray-700 dark:text-white">
+                        <button type="button" onclick="applyCoupon()" class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-500 font-bold transition">Apply</button>
+                    </div>
+                    <p id="coupon-message" class="text-sm mt-1 hidden"></p>
+                </div>
+
+                <form id="payment-form" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Card Number</label>
+                        <div class="relative">
+                            <input type="text" placeholder="0000 0000 0000 0000" class="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600 outline-none dark:bg-gray-700 dark:text-white">
+                            <i class="fas fa-credit-card absolute left-3 top-3 text-gray-400"></i>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="w-1/2">
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Expiry</label>
+                            <input type="text" placeholder="MM/YY" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600 outline-none dark:bg-gray-700 dark:text-white">
+                        </div>
+                        <div class="w-1/2">
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">CVC</label>
+                            <input type="text" placeholder="123" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600 outline-none dark:bg-gray-700 dark:text-white">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Cardholder Name</label>
+                        <input type="text" placeholder="John Doe" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600 outline-none dark:bg-gray-700 dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Transaction ID (For Verification)</label>
+                        <input type="text" id="transaction-id" placeholder="e.g. TID-123456789" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600 outline-none dark:bg-gray-700 dark:text-white">
+                    </div>
+                    
+                    <div class="pt-2">
+                        <button type="submit" class="w-full bg-blue-800 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition flex justify-center items-center">
+                            <i class="fas fa-lock mr-2"></i> Pay & Enroll
+                        </button>
+                    </div>
+                </form>
+                <p class="text-center text-xs text-gray-400 mt-4"><i class="fas fa-shield-alt"></i> 256-bit SSL Encrypted Payment</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Volunteer Modal -->
+    <div id="volunteer-modal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-xl max-w-md w-full mx-4 p-6 shadow-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold text-blue-800 dark:text-white">Join as Volunteer</h3>
+                <button onclick="document.getElementById('volunteer-modal').classList.add('hidden')" class="text-gray-500 hover:text-red-500"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="volunteer-form" class="space-y-4">
+                <input type="text" id="vol-name" placeholder="Full Name" class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:text-white" required>
+                <input type="email" id="vol-email" placeholder="Email Address" class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:text-white" required>
+                <input type="text" id="vol-skills" placeholder="Skills (e.g. Teaching, Design)" class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:text-white" required>
+                <input type="text" id="vol-avail" placeholder="Availability (e.g. 5 hrs/week)" class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:text-white" required>
+                <button type="submit" class="w-full bg-blue-800 text-white py-2 rounded-lg font-bold hover:bg-blue-700">Submit Application</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Review Modal -->
+    <div id="review-modal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-xl max-w-md w-full mx-4 p-6 shadow-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold text-mrs-primary dark:text-white">Write a Review</h3>
+                <button onclick="document.getElementById('review-modal').classList.add('hidden')" class="text-gray-500 hover:text-red-500"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="review-form" class="space-y-4">
+                <input type="text" id="review-name" placeholder="Your Name" class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:text-white" required>
+                <input type="text" id="review-role" placeholder="Your Role (e.g. Student)" class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:text-white" required>
+                <textarea id="review-content" rows="4" placeholder="Share your experience..." class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:text-white" required></textarea>
+                <div>
+                    <label class="block text-sm text-gray-600 dark:text-gray-300 mb-1">Rating</label>
+                    <select id="review-rating" class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:text-white">
+                        <option value="5">⭐⭐⭐⭐⭐ (Excellent)</option>
+                        <option value="4">⭐⭐⭐⭐ (Good)</option>
+                        <option value="3">⭐⭐⭐ (Average)</option>
+                        <option value="2">⭐⭐ (Fair)</option>
+                        <option value="1">⭐ (Poor)</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-mrs-primary text-white py-2 rounded-lg font-bold hover:bg-green-800 transition">Submit Review</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Chat Bot Widget Container -->
+    <div id="chatbot-container">
+        <!-- Chat Window -->
+        <div id="chatbot-window" class="chatbot-window">
+            <!-- Header -->
+            <div class="chatbot-header">
+                <div class="chatbot-title">
+                    <h3>Zahra 🤖</h3>
+                    <p>Muslim Revive Skills Assistant</p>
+                </div>
+                <button id="chatbot-close" class="chatbot-close">✕</button>
+            </div>
+
+            <!-- Messages Container -->
+            <div id="chatbot-messages" class="chatbot-messages">
+                <!-- Messages will be injected here -->
+            </div>
+
+            <!-- Input Area -->
+            <div class="chatbot-input-area">
+                <input type="text" id="chatbot-input" class="chatbot-input" placeholder="Type your message... (اردو میں بھی لکھ سکتے ہیں)" autocomplete="off">
+                <button id="chatbot-send" class="chatbot-send"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+
+        <!-- Floating Button -->
+        <div id="chatbot-button" class="chatbot-button">
+            <i class="fas fa-comment-dots"></i>
+        </div>
+    </div>
+
+
+    <!-- Note: Auth modals have been replaced by login.html -->
+    <!-- Other modals like Project and Payment are kept for potential future use -->
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menu-btn').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking links
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        function openVolunteerModal() {
+            document.getElementById('volunteer-modal').classList.remove('hidden');
+        }
+
+        document.getElementById('volunteer-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const payload = {
+                name: document.getElementById('vol-name').value,
+                email: document.getElementById('vol-email').value,
+                skills: document.getElementById('vol-skills').value,
+                availability: document.getElementById('vol-avail').value
+            };
+            const res = await fetch('/api/volunteer', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const data = await res.json();
+            alert(data.message);
+            if(data.success) document.getElementById('volunteer-modal').classList.add('hidden');
+        });
+
+        function openReviewModal() {
+            document.getElementById('review-modal').classList.remove('hidden');
+        }
+
+        document.getElementById('review-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const payload = {
+                name: document.getElementById('review-name').value,
+                role: document.getElementById('review-role').value,
+                content: document.getElementById('review-content').value,
+                rating: document.getElementById('review-rating').value,
+                email: localStorage.getItem('userEmail')
+            };
+            const res = await fetch('/api/reviews', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const data = await res.json();
+            alert(data.message);
+            if(data.success) document.getElementById('review-modal').classList.add('hidden');
+        });
+
+        // Project data
+        const projects = {
+            1: {
+                title: "Smart Learning Platform",
+                image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/c655b5e1-8e0c-4144-99b8-f1d9da742130.png",
+                content: `
+                    <p>An AI-powered educational platform that provides personalized learning experiences tailored to each student's needs and learning style.</p>
+                    <h4>Features:</h4>
+                    <ul>
+                        <li>Adaptive learning algorithms</li>
+                        <li>Real-time progress tracking</li>
+                        <li>Interactive content delivery</li>
+                        <li>Automated assessment system</li>
+                        <li>Learning analytics dashboard</li>
+                    </ul>
+                    <h4>Technologies Used:</h4>
+                    <p>Python, Django, React, Machine Learning, PostgreSQL</p>
+                `
+            },
+            2: {
+                title: "Career Path Builder",
+                image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/131ec78a-a187-449b-8eca-57f097acc83e.png",
+                content: `
+                    <p>A comprehensive career development platform that helps students navigate their professional journey with personalized guidance.</p>
+                    <h4>Features:</h4>
+                    <ul>
+                        <li>Skills assessment tools</li>
+                        <li>Career pathway recommendations</li>
+                        <li>Resume building assistance</li>
+                        <li>Interview preparation resources</li>
+                        <li>Job market insights</li>
+                    </ul>
+                    <h4>Technologies Used:</h4>
+                    <p>JavaScript, Node.js, MongoDB, Express, React</p>
+                `
+            },
+            3: {
+                title: "Quran Companion App",
+                image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9fffce39-6c07-4de5-97af-8c8846f5ff51.png",
+                content: `
+                    <p>A mobile application designed to enhance Quran study with modern technology while maintaining traditional Islamic values.</p>
+                    <h4>Features:</h4>
+                    <ul>
+                        <li>Multiple translation options</li>
+                        <li>Tafsir (exegesis) integration</li>
+                        <li>Daily verse reminders</li>
+                        <li>Recitation tracking</li>
+                        <li>Study group functionality</li>
+                    </ul>
+                    <h4>Technologies Used:</h4>
+                    <p>React Native, Firebase, Quran API, JavaScript</p>
+                `
+            },
+            4: {
+                title: "Learning Analytics Dashboard",
+                image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/fcbea7a4-7b99-4294-94d0-f25ec65bed81.png",
+                content: `
+                    <p>An advanced analytics platform that provides detailed insights into student performance and learning patterns.</p>
+                    <h4>Features:</h4>
+                    <ul>
+                        <li>Real-time performance metrics</li>
+                        <li>Predictive analytics</li>
+                        <li>Custom reporting tools</li>
+                        <li>Progress visualization</li>
+                        <li>Early intervention alerts</li>
+                    </ul>
+                    <h4>Technologies Used:</h4>
+                    <p>Python, Data Science libraries, D3.js, PostgreSQL</p>
+                `
+            },
+            5: {
+                title: "Emotional Intelligence Program",
+                image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/f4d68739-0458-4229-a5e4-f1cc125a2127.png",
+                content: `
+                    <p>A comprehensive EQ development program that combines assessment tools with personalized training modules.</p>
+                    <h4>Features:</h4>
+                    <ul>
+                        <li>Emotional intelligence assessment</li>
+                        <li>Personalized development plans</li>
+                        <li>Interactive training modules</li>
+                        <li>Progress tracking</li>
+                        <li>Certification upon completion</li>
+                    </ul>
+                    <h4>Technologies Used:</h4>
+                    <p>JavaScript, React, Node.js, MongoDB, Psychology APIs</p>
+                `
+            },
+            6: {
+                title: "Workshop Management System",
+                image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e2581626-de84-4935-b932-52bfb3e571fc.png",
+                content: `
+                    <p>A complete system for organizing, managing, and tracking educational workshops and training sessions.</p>
+                    <h4>Features:</h4>
+                    <ul>
+                        <li>Event scheduling and management</li>
+                        <li>Participant registration</li>
+                        <li>Attendance tracking</li>
+                        <li>Feedback collection</li>
+                        <li>Certificate generation</li>
+                    </ul>
+                    <h4>Technologies Used:</h4>
+                    <p>Django, Python, React, PostgreSQL, HTML/CSS</p>
+                `
+            }
+        };
+
+        // Modal functions
+        function openProjectModal(projectId) {
+            const project = projects[projectId];
+            if (project) {
+                document.getElementById('modal-title').textContent = project.title;
+                document.getElementById('modal-image').src = project.image;
+                document.getElementById('modal-image').alt = project.title + ' project showcase';
+                document.getElementById('modal-content').innerHTML = project.content;
+                
+                const modal = document.getElementById('project-modal');
+                modal.classList.remove('opacity-0', 'invisible');
+                modal.classList.add('opacity-1', 'visible');
+            }
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('project-modal');
+            modal.classList.remove('opacity-1', 'visible');
+            modal.classList.add('opacity-0', 'invisible');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('project-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Form submission handling
+        document.getElementById('consultation-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Consultation request submitted successfully! We will contact you shortly.');
+            this.reset();
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections for animation
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Dark Mode Logic
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+        }
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+
+        // Testimonial Scroll Logic
+        function scrollTestimonials(direction) {
+            const container = document.getElementById('testimonial-track');
+            const cardWidth = container.firstElementChild.clientWidth;
+            const gap = 24; // gap-6 is 1.5rem = 24px
+            const scrollAmount = cardWidth + gap;
+            
+            if (direction === 'left') {
+                container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            } else {
+                container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
+        }
+
+        // Auto-scroll for testimonials
+        let testimonialInterval = setInterval(() => {
+            const container = document.getElementById('testimonial-track');
+            if (!container) return;
+            
+            // Check if we reached the end
+            if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 10) {
+                container.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+                const cardWidth = container.firstElementChild.clientWidth;
+                const gap = 24;
+                container.scrollBy({ left: cardWidth + gap, behavior: 'smooth' });
+            }
+        }, 4000);
+
+        // Pause auto-scroll on hover
+        const track = document.getElementById('testimonial-track');
+        if(track) {
+            track.addEventListener('mouseenter', () => clearInterval(testimonialInterval));
+            track.addEventListener('mouseleave', () => {
+                testimonialInterval = setInterval(() => {
+                    const container = document.getElementById('testimonial-track');
+                    if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 10) {
+                        container.scrollTo({ left: 0, behavior: 'smooth' });
+                    } else {
+                        const cardWidth = container.firstElementChild.clientWidth;
+                        const gap = 24;
+                        container.scrollBy({ left: cardWidth + gap, behavior: 'smooth' });
+                    }
+                }, 4000);
+            });
+        }
+
+        // FAQ Accordion Logic
+        function toggleFAQ(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('i');
+            
+            content.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
+
+        // --- New Auth & UI Logic ---
+        // Check if user is logged in and update UI accordingly
+        async function updateAuthButtons() {
+            const userEmail = localStorage.getItem('userEmail');
+            const userRole = localStorage.getItem('userRole');
+            
+            let dashboardText = 'Dashboard';
+            let dashboardLink = 'dashboard.html';
+
+            if (userRole === 'Admin') {
+                dashboardLink = 'admin-dashboard.html';
+                dashboardText = 'Admin Panel';
+            } else if (userRole === 'Teacher') {
+                dashboardText = 'Teacher Panel';
+            } else if (userRole === 'Parent') {
+                dashboardLink = 'parent-portal.html';
+                dashboardText = 'Parent Portal';
+            }
+
+            const desktopContainer = document.getElementById('auth-buttons-desktop');
+            const mobileContainer = document.getElementById('auth-buttons-mobile');
+
+            let badgeHtml = '';
+            if (userRole === 'Admin') {
+                try {
+                    const res = await fetch('/api/admin/notifications');
+                    const data = await res.json();
+                    if (data.count > 0) {
+                        badgeHtml = `<span class="absolute -top-2 -right-2 bg-red-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full animate-pulse border border-white">${data.count}</span>`;
+                    }
+                } catch (e) { console.error("Failed to fetch notifications"); }
+            }
+
+            if (userEmail) {
+                desktopContainer.innerHTML = `
+                    <a href="${dashboardLink}" class="relative text-blue-800 dark:text-blue-400 font-medium">${dashboardText} ${badgeHtml}</a>
+                    <button onclick="logout()" class="bg-red-500 text-white px-5 py-2 rounded-full hover:bg-red-600 transition">Logout</button>
+                `;
+                mobileContainer.innerHTML = `
+                    <a href="${dashboardLink}" class="text-blue-800">${dashboardText}</a>
+                    <button onclick="logout()" class="text-left text-red-500 font-bold">Logout</button>
+                `;
+            } else {
+                desktopContainer.innerHTML = `
+                    <a href="login.html" class="text-blue-800 dark:text-blue-400 hover:text-blue-600 font-medium">Login</a>
+                    <a href="login.html#register" class="bg-blue-800 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition shadow-md">Sign Up</a>
+                `;
+                 mobileContainer.innerHTML = `
+                    <a href="login.html" class="text-blue-800 mt-2">Login</a>
+                    <a href="login.html#register" class="text-blue-800 font-bold">Sign Up</a>
+                `;
+            }
+        }
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = 'mrs.html';
+        }
+
+        // Load Dynamic Courses
+        async function loadDynamicCourses() {
+            try {
+                const res = await fetch('/api/courses');
+                const courses = await res.json();
+                const container = document.getElementById('courses-grid');
+                
+                courses.forEach(c => {
+                    const courseHtml = `
+                        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden card-hover border border-gray-100 dark:border-gray-700">
+                            <div class="h-48 bg-gray-700 flex items-center justify-center">
+                                <i class="fas fa-chalkboard-teacher text-6xl text-blue-400"></i>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex justify-between items-center mb-2"><span class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded">New</span><span class="text-2xl font-bold text-blue-800">$${c.price}</span></div>
+                                <h3 class="text-xl

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Admin Login - MRS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #111827; }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+
+    <div class="bg-gray-800 p-8 rounded-xl shadow-2xl w-full max-w-md border border-gray-700">
+        <div class="text-center mb-8">
+            <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg shadow-red-900/50">
+                <i class="fas fa-shield-alt text-3xl text-white"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-white">Admin Portal</h2>
+            <p class="text-gray-400 text-sm">Restricted Access Area</p>
+        </div>
+
+        <form id="admin-login-form" class="space-y-5">
+            <div>
+                <label class="block text-gray-400 text-xs font-bold uppercase mb-2">Email Address</label>
+                <input type="email" id="admin-email" class="w-full px-4 py-3 bg-gray-900 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition" required>
+            </div>
+            
+            <div>
+                <label class="block text-gray-400 text-xs font-bold uppercase mb-2">Password</label>
+                <input type="password" id="admin-password" class="w-full px-4 py-3 bg-gray-900 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition" required>
+            </div>
+
+            <div>
+                <label class="block text-gray-400 text-xs font-bold uppercase mb-2">Security Key</label>
+                <input type="password" id="admin-key" placeholder="Enter Secret Key" class="w-full px-4 py-3 bg-gray-900 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition" required>
+            </div>
+
+            <div id="2fa-container" class="hidden">
+                <label class="block text-gray-400 text-xs font-bold uppercase mb-2">2FA Code</label>
+                <input type="text" id="admin-2fa" placeholder="Enter 6-digit code" class="w-full px-4 py-3 bg-gray-900 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition">
+                <p class="text-xs text-gray-500 mt-1">Check server console for code.</p>
+                <div class="text-right mt-2">
+                    <button type="button" id="resend-2fa-btn" class="text-xs text-blue-400 hover:text-blue-300 underline">Resend Code</button>
+                </div>
+            </div>
+
+            <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-lg transition shadow-lg shadow-red-900/30">
+                Authenticate & Login
+            </button>
+        </form>
+        
+        <div class="mt-6 text-center">
+            <a href="mrs.html" class="text-gray-500 hover:text-white text-sm transition">← Return to Main Site</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('admin-login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('admin-email').value;
+            const password = document.getElementById('admin-password').value;
+            const securityKey = document.getElementById('admin-key').value;
+            const twoFactorCode = document.getElementById('admin-2fa').value;
+            const twoFactorContainer = document.getElementById('2fa-container');
+
+            // If 2FA field is visible, we are in verification mode
+            if (!twoFactorContainer.classList.contains('hidden')) {
+                const res = await fetch('/api/admin/verify-2fa', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, code: twoFactorCode })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    localStorage.setItem('userEmail', data.user.email);
+                    localStorage.setItem('userName', data.user.name);
+                    localStorage.setItem('userRole', data.user.role);
+                    window.location.href = 'admin-dashboard.html';
+                } else {
+                    alert(data.message);
+                }
+                return;
+            }
+
+            const res = await fetch('/api/admin/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password, securityKey })
+            });
+
+            const data = await res.json();
+            if (data.requires2FA) {
+                alert(data.message);
+                twoFactorContainer.classList.remove('hidden');
+                document.getElementById('admin-email').readOnly = true;
+                document.getElementById('admin-password').readOnly = true;
+                document.getElementById('admin-key').readOnly = true;
+                document.querySelector('button[type="submit"]').innerText = "Verify Code";
+            } else {
+                alert(data.message);
+            }
+        });
+
+        document.getElementById('resend-2fa-btn').addEventListener('click', async () => {
+            const email = document.getElementById('admin-email').value;
+            if (!email) return;
+
+            const res = await fetch('/api/admin/resend-2fa', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            });
+            const data = await res.json();
+            alert(data.message);
+        });
+    </script>
+</body>
+</html>

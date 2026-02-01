@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Volunteer Registration - Muslim Revive Skills{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0"><i class="fas fa-handshake"></i> رضاکار رجسٹریشن / Volunteer Registration</h2>
+                </div>
+                <div class="card-body p-5">
+                    <p class="lead">Muslim Revive Skills کے ساتھ رضاکار بنیں اور معاشرے کی خدمت کریں۔</p>
+                    <form method="POST" class="needs-validation">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="skills" class="form-label">اپنی مہارتیں / Your Skills</label>
+                            <textarea name="skills" class="form-control" placeholder="e.g., Teaching, Content Writing, Technical Support" rows="3" required></textarea>
+                            <small class="form-text text-muted">اپنی مہارتیں کوما سے الگ کریں</small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="experience" class="form-label">اپنا تجربہ / Your Experience</label>
+                            <textarea name="experience" class="form-control" placeholder="بتائیں آپ کے پاس کون سے قابل تجربہ ہیں" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="whatsapp" class="form-label">WhatsApp نمبر / WhatsApp Number</label>
+                            <input type="tel" name="whatsapp" class="form-control" placeholder="+923001234567" required />
+                            <small class="form-text text-muted">خودکار WhatsApp گروپ میں شامل ہونے کے لیے</small>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="terms" required />
+                            <label class="form-check-label" for="terms">میں قبول کرتا ہوں کہ Muslim Revive Skills کے ساتھ رضاکار کے طور پر کام کروں گا</label>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-check-circle"></i> رجسٹر کریں / Register as Volunteer</button>
+                        </div>
+                    </form>
+                    <div class="alert alert-info mt-4">
+                        <h5>رضاکار بننے کے فوائل:</h5>
+                        <ul class="mb-0">
+                            <li>خودکار WhatsApp گروپ میں شامل ہوں</li>
+                            <li>مختلف مہم میں حصہ لیں</li>
+                            <li>سرٹیفکیٹ حاصل کریں</li>
+                            <li>معاشرے کی خدمت کریں</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

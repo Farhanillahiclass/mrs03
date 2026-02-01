@@ -1,0 +1,14 @@
+[build]
+  command = "sh build.sh"
+  publish = "staticfiles"
+
+[dev]
+  command = "python manage.py runserver"
+  port = 8000
+  publish = "staticfiles"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"

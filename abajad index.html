@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mrsapp Abjad Calculator</title>
+    <style>
+        :root {
+            --primary: #001f3f; /* MRS Dark Blue */
+            --secondary: #ffcc00; /* MRS Gold */
+            --bg: #f9fafb;
+            --text: #333;
+            --card-bg: #ffffff;
+        }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            text-align: center; 
+            padding: 0; 
+            margin: 0;
+            background: var(--bg); 
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            background: var(--primary);
+            width: 100%;
+            padding: 20px 0;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+            position: relative;
+        }
+        h1 { margin: 0; font-weight: 300; letter-spacing: 1px; }
+        
+        /* Navigation / LMS Tabs */
+        .nav-tabs { margin-bottom: 20px; }
+        .nav-btn {
+            background: none;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            color: #666;
+            transition: all 0.3s;
+        }
+        .nav-btn.active {
+            border-bottom: 3px solid var(--secondary);
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Main Container */
+        .container {
+            width: 90%;
+            max-width: 600px;
+        }
+
+        .box { 
+            background: var(--card-bg); 
+            padding: 40px; 
+            border-radius: 20px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05); 
+            transition: transform 0.3s ease;
+            display: none; /* Hidden by default, shown via JS */
+        }
+        .box.active { display: block; animation: fadeIn 0.5s; }
+
+        input { 
+            font-size: 24px; 
+            padding: 15px; 
+            width: 80%; 
+            text-align: center; 
+            border: 2px solid #e1e1e1; 
+            border-radius: 12px; 
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        input:focus { border-color: var(--primary); }
+        
+        #result { font-size: 64px; color: var(--primary); margin-top: 20px; font-weight: bold; text-shadow: 0 0 20px rgba(0,31,63,0.1); }
+        .label { color: #888; margin-top: 15px; text-transform: uppercase; font-size: 12px; letter-spacing: 1px; }
+
+        /* Quiz Styles */
+        .quiz-card { font-size: 80px; margin: 20px 0; color: var(--text); }
+        .btn {
+            background: var(--secondary);
+            color: var(--primary);
+            font-weight: bold;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255, 204, 0, 0.4); }
+        #quizFeedback { margin-top: 15px; font-weight: bold; height: 24px; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Reverse Lookup Styles */
+        #reverseResults div {
+            padding: 8px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        /* Learn Table Styles */
+        .table-container {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 20px;
+            border: 1px solid #e1e1e1;
+            border-radius: 12px;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 15px; border-bottom: 1px solid #eee; text-align: center; font-size: 20px; }
+        th {
+            background-color: var(--bg);
+            color: var(--text);
+            position: sticky;
+            top: 0;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>MRS Abjad LMS</h1>
+    <a href="mrs.html" style="position: absolute; right: 20px; top: 25px; color: white; text-decoration: none; font-weight: bold; border: 1px solid white; padding: 5px 15px; border-radius: 20px; font-size: 14px;">Back to Main Site</a>
+</header>
+
+<div class="nav-tabs">
+    <button class="nav-btn active" onclick="switchTab('calc')">Calculator</button>
+    <button class="nav-btn" onclick="switchTab('quiz')">Quiz (LMS)</button>
+    <button class="nav-btn" onclick="switchTab('learn')">Learn</button>
+    <button class="nav-btn" onclick="switchTab('reverse')">Reverse Lookup</button>
+</div>
+
+<div class="container">
+    <!-- Calculator Section -->
+    <div id="calc" class="box active">
+        <h2>Abjad Calculator</h2>
+    <input type="text" id="inputField" placeholder="Type Arabic here..." onkeyup="calc()">
+    <div class="label">Total Value:</div>
+    <div id="result">0</div>
+    </div>
+
+    <!-- LMS Quiz Section -->
+    <div id="quiz" class="box">
+        <h2>Abjad Mastery Quiz</h2>
+        <div class="label">What is the value of:</div>
+        <div id="quizChar" class="quiz-card">?</div>
+        <input type="number" id="quizInput" placeholder="Enter value">
+        <br>
+        <button class="btn" onclick="checkAnswer()">Submit</button>
+        <div id="quizFeedback"></div>
+        <div class="label">Score: <span id="scoreVal">0</span></div>
+    </div>
+
+    <!-- Learn Section -->
+    <div id="learn" class="box">
+        <h2>Abjad Reference</h2>
+        <div class="table-container">
+            <table id="abjadTable">
+                <thead>
+                    <tr><th>Letter</th><th>Value</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Reverse Lookup Section -->
+    <div id="reverse" class="box">
+        <h2>Reverse Lookup</h2>
+        <p style="color: #666; font-size: 14px; margin-top: -10px; margin-bottom: 20px;">Find letter combinations for a given value.</p>
+        <input type="number" id="reverseInput" placeholder="Enter a value">
+        <br>
+        <button class="btn" onclick="findAbjadCombinations()">Find</button>
+        <div id="reverseResults" style="text-align: left; margin-top: 20px; max-height: 250px; overflow-y: auto; border: 1px solid #eee; border-radius: 8px; padding: 10px;"></div>
+    </div>
+</div>
+
+<script>
+    // This map uses Unicode codes so it never fails
+    const abjadValues = {
+        0x0627: 1,    // Alif (ا)
+        0x0623: 1,    // Alif Hamza (أ)
+        0x0625: 1,    // Alif Hamza Below (إ)
+        0x0622: 1,    // Alif Madda (آ)
+        0x0628: 2,    // Ba (ب)
+        0x062C: 3,    // Jim (ج)
+        0x062F: 4,    // Dal (د)
+        0x0647: 5,    // Ha (ه)
+        0x0629: 5,    // Ta Marbuta (ة)
+        0x0648: 6,    // Waw (و)
+        0x0632: 7,    // Zay (ز)
+        0x062D: 8,    // Hha (ح)
+        0x0637: 9,    // Tta (ط)
+        0x064A: 10,   // Ya (ي)
+        0x0649: 10,   // Alif Maqsura (ى)
+        0x0643: 20,   // Kaf (ك)
+        0x0644: 30,   // Lam (ل)
+        0x0645: 40,   // Mim (م)
+        0x0646: 50,   // Nun (ن)
+        0x0633: 60,   // Sin (س)
+        0x0639: 70,   // Ayn (ع)
+        0x0641: 80,   // Fa (ف)
+        0x0635: 90,   // Sad (ص)
+        0x0642: 100,  // Qaf (ق)
+        0x0631: 200,  // Ra (ر)
+        0x0634: 300,  // Shin (ش)
+        0x062A: 400,  // Ta (ت)
+        0x062B: 500,  // Tha (ث)
+        0x062E: 600,  // Kha (خ)
+        0x0630: 700,  // Dhal (ذ)
+        0x0636: 800,  // Dad (ض)
+        0x0638: 900,  // Za (ظ)
+        0x063A: 1000  // Ghayn (غ)
+    };
+
+    // --- Calculator Logic ---
+    function calc() {
+        const input = document.getElementById('inputField').value;
+        let score = 0;
+        for (let i = 0; i < input.length; i++) {
+            const code = input.charCodeAt(i);
+            if (abjadValues[code]) {
+                score += abjadValues[code];
+            }
+        }
+        document.getElementById('result').innerText = score;
+    }
+
+    // --- UI Logic ---
+    function switchTab(tabId) {
+        document.querySelectorAll('.box').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        
+        document.getElementById(tabId).classList.add('active');
+        event.target.classList.add('active');
+
+        if(tabId === 'quiz') nextQuestion();
+        if(tabId === 'learn') renderLearnTable();
+        if(tabId === 'reverse') initializeAbjadItems();
+    }
+
+    // --- LMS / Quiz Logic ---
+    let currentQuestionValue = 0;
+    let currentScore = 0;
+
+    function nextQuestion() {
+        const keys = Object.keys(abjadValues);
+        const randomKey = keys[Math.floor(Math.random() * keys.length)];
+        const char = String.fromCharCode(randomKey);
+        
+        currentQuestionValue = abjadValues[randomKey];
+        document.getElementById('quizChar').innerText = char;
+        document.getElementById('quizInput').value = '';
+        document.getElementById('quizFeedback').innerText = '';
+        document.getElementById('quizInput').focus();
+    }
+
+    function checkAnswer() {
+        const userVal = parseInt(document.getElementById('quizInput').value);
+        const feedback = document.getElementById('quizFeedback');
+        
+        if (userVal === currentQuestionValue) {
+            feedback.style.color = 'green';
+            feedback.innerText = 'Correct! +10 Points';
+            currentScore += 10;
+            document.getElementById('scoreVal').innerText = currentScore;
+            
+            // Send score to backend (if available)
+            saveScoreToBackend(currentScore);
+            
+            setTimeout(nextQuestion, 1000);
+        } else {
+            feedback.style.color = 'red';
+            feedback.innerText = `Wrong! It was ${currentQuestionValue}`;
+        }
+    }
+
+    // --- Backend Integration ---
+    async function saveScoreToBackend(score) {
+        try {
+            await fetch('http://localhost:3000/api/score', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ score: score, timestamp: new Date() })
+            });
+        } catch (e) {
+            console.log("Backend not connected, running in offline mode.");
+        }
+    }
+
+    // --- Learn Tab Logic ---
+    function renderLearnTable() {
+        const tbody = document.querySelector('#abjadTable tbody');
+        if (tbody.innerHTML !== "") return; // Render only once
+
+        // Sort entries by value for easier learning
+        const entries = Object.entries(abjadValues).sort((a, b) => a[1] - b[1]);
+
+        entries.forEach(([code, val]) => {
+            const row = `<tr><td>${String.fromCharCode(code)}</td><td>${val}</td></tr>`;
+            tbody.innerHTML += row;
+        });
+    }
+
+    // --- Reverse Lookup Logic ---
+    let abjadItems; // To be initialized once
+
+    function initializeAbjadItems() {
+        if (abjadItems) return;
+
+        const seenValues = new Set();
+        const items = [];
+        const entries = Object.entries(abjadValues).sort((a, b) => a[1] - b[1]);
+
+        for (const [code, value] of entries) {
+            if (!seenValues.has(value)) {
+                items.push({ char: String.fromCharCode(code), value: value });
+                seenValues.add(value);
+            }
+        }
+        // Sort descending for the recursive algorithm efficiency
+        abjadItems = items.sort((a, b) => b.value - a.value);
+    }
+
+    function findAbjadCombinations() {
+        const target = parseInt(document.getElementById('reverseInput').value);
+        const resultsContainer = document.getElementById('reverseResults');
+        
+        if (isNaN(target) || target <= 0) {
+            resultsContainer.innerHTML = '<p>Please enter a valid positive number.</p>';
+            return;
+        }
+
+        resultsContainer.innerHTML = '<p>Searching...</p>';
+        
+        const results = [];
+        // Using setTimeout to avoid blocking the UI thread on large numbers
+        setTimeout(() => {
+            findCombinationsRecursive(target, [], 0, results);
+            
+            if (results.length === 0) {
+                resultsContainer.innerHTML = '<p>No unique letter combinations found.</p>';
+            } else {
+                const limit = 100;
+                let html = results.slice(0, limit).map(combo => 
+                    `<div>${combo.map(c => `${c.char}<span style="color:#999;">(${c.value})</span>`).join(' + ')}</div>`
+                ).join('');
+
+                if (results.length > limit) {
+                    html += `<p style="text-align:center; margin-top:10px;">... and ${results.length - limit} more combinations.</p>`;
+                }
+                resultsContainer.innerHTML = html;
+            }
+        }, 10);
+    }
+
+    function findCombinationsRecursive(target, path, startIndex, results) {
+        if (results.length >= 100) return; // Hard limit to prevent performance issues
+        if (target === 0) { results.push([...path]); return; }
+        if (target < 0) return;
+
+        for (let i = startIndex; i < abjadItems.length; i++) {
+            const item = abjadItems[i];
+            if (item.value > target) continue;
+            path.push(item);
+            findCombinationsRecursive(target - item.value, path, i + 1, results);
+            path.pop(); // backtrack
+        }
+    }
+</script>
+
+</body>
+</html>
