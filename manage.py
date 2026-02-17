@@ -1,9 +1,9 @@
-# Django Project Management Script
+#!/usr/bin/env python
+import os
+import sys
 
 if __name__ == "__main__":
-    import os
-    import sys
-
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mrs03.settings")
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
@@ -12,6 +12,4 @@ if __name__ == "__main__":
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc
-
-    sys.path.append(os.path.dirname(os.path.abspath(__file__)))
     execute_from_command_line(sys.argv)
